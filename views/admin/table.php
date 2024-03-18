@@ -76,7 +76,7 @@ $result = mysqli_query($connection, $sql);
                                             <td><div class="col-sm-4 col-12">
 			                                        <div class="card">
 				                                        <div class="card-img">
-					                                        <img src="<?=$row['bookImage'] ?? ""?>" class="card-img-top img-fluid" alt="Google Admin" />
+					                                        <img src="<?=("book/" .$row['bookImage']) ?? ""?>" class="card-img-top img-fluid" alt="Google Admin" />
 				                                        </div>
 			                                        </div>
 		                                        </div>

@@ -44,48 +44,30 @@ if(isset($_POST['submit'])) {
 
 ?>
 
+<div class="content-wrapper-scroll">
+	<!-- Main header starts -->
+	<div class="main-header d-flex align-items-center justify-content-between position-relative">
+						<div class="d-flex align-items-center justify-content-center">
+							<div class="page-icon">
+								<i class="bi bi-file-person-fill"></i>
+							</div>
+							<div class="page-title d-none d-md-block">
+								<h5>Change Password</h5>
+							</div>
+						</div>
+					</div>
+					<!-- Main header ends -->
 
-   
-<meta name="description" content="Sapphire - Responsive Bootstrap 5 Dashboard Template" />
-		<meta name="author" content="Bootstrap Gallery" />
-		<link rel="canonical" href="https://www.bootstrap.gallery/">
-		<meta property="og:url" content="https://www.bootstrap.gallery">
-		<meta property="og:title" content="Admin Templates - Dashboard Templates | Bootstrap Gallery">
-		<meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
-		<meta property="og:type" content="Website">
-		<meta property="og:site_name" content="Bootstrap Gallery">
-		<link rel="shortcut icon" href="assets/images/favicon.svg" />
+		<!-- Content wrapper start -->
+		<div class="content-wrapper">
+        <div class="col-sm-12 col-12">
 
-		<!-- Title -->
-
-        
-		<title>Bootstrap</title>
-
-		<!-- *************
-			************ Common Css Files *************
-		************ -->
-		<!-- Bootstrap css -->
-
-	
-</head>
-
-
-
-                    <div class="content-wrapper">
-						<div class="subscribe-header">
-<div class="login-container" >
-    <!-- Login box start -->
-    <div class="container" style="margin-top: 50px;">
-        <form method="post" action="">
-            <div class="login-box rounded-2 p-5">
-                <div class="login-form">
-                    <a href="#" class="login-logo mb-3">
-                        <img src='<?=asset("assets/images/openbook3.PNG")?>' alt="Crowdnub Admin" />
-                         <div class="page-title d-none d-md-block"> <h4  class="m-0" >Library<br>Management<br> System</h4 ></div>
-                    </a>
-                    <h5 class="fw-light mb-5">
-                        In order to access your account, please enter the email id you provided during the registration process.
-                    </h5>
+            <!-- Login box start -->
+                <form method="post" action="">
+                <div class="login-box rounded-2 p-5">
+                    <div class="login-form">
+                    
+                    
                     <?php if(!empty($message)): ?>
                         <div class="alert alert-primary fade show" <?php echo ($message === "Your password has been successfully changed.") ? "green" : "red"; ?> role="alert">
                         <?php echo $message; ?>
@@ -104,13 +86,11 @@ if(isset($_POST['submit'])) {
                         </div>
                     </div>
                 </div>
-            </form>
+                </form>
+            </div>
         </div>
-    <!-- Login box end -->
-    </div>
 </div>
-                    </div>
-                    </div>
+<!-- Content wrapper scroll end -->
 
                     				
 <?php

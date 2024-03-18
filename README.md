@@ -1,2 +1,0 @@
-# LMS-mine
-Library

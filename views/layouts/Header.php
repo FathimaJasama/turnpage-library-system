@@ -77,8 +77,9 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 
 				<!-- Sidebar brand starts -->
 				<div class="brand">
-					<a href="index.html" class="logo">
-						<img src="<?=asset("assets/images/openbook3.PNG")?>" class="d-none d-md-block me-4" alt="Sapphire Admin Dashboard" /><div class="page-title d-none d-md-block">
+					<a href="" class="logo">
+						<img src="<?=asset("assets/images/openbook3.PNG")?>" class="d-none d-md-block me-4" alt="Sapphire Admin Dashboard" />
+						<div class="page-title d-none d-md-block">
 							<h4 class="m-0">Library Management System</h4>
 						</div>
 						<img src="<?=asset("assets/images/logo-sm.svg")?>" class="d-block d-md-none me-4" alt="Sapphire Admin Dashboard" />
@@ -120,9 +121,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 											<p class="small m-0 text-secondary">Today, 07:30pm</p>
 										</div>
 									</div>
-								</div>
-							
-								
+								</div>	
 								<div class="d-grid mx-3 my-1">
 									<a href="javascript:void(0)" class="btn btn-primary">View all</a>
 								</div>
@@ -172,7 +171,6 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 					<div class="sidebar-menu">
 						<div class="sidebarMenuScroll">
 							<ul>
-								
 								<li>
 									<a href="<?= "dashboard.php"?>">
 										<i class="bi bi-building"></i>
@@ -223,9 +221,9 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</a>
 								</li>
 							</ul>		
+						</div>
 					</div>
 					<!-- Sidebar menu ends -->
-
 				</nav>
 				<!-- Sidebar wrapper end -->
 	

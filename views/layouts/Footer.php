@@ -1,5 +1,13 @@
 
 
+				<div class="app-footer">
+					<span>© Library Management System</span>
+				</div>
+				<!-- App footer end -->
+			</div>
+			<!-- Main container end -->
+
+		</div>
 		<!-- *************
 			************ Required JavaScript Files *************
 		************* -->
