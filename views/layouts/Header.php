@@ -184,29 +184,17 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</a>
 								</li>
 								<li>
-									<a href="<?= 'table.php' ?>">
+									<a href="<?= 'tables.php' ?>">
 										<i class="bi bi-journals"></i>
 										<span class="menu-text">Book Details</span>
 									</a>
 								</li>
-								<li class="sidebar-dropdown">
-									<a href=<?= 'books.php'?>>
+								<li>
+									<a href=<?= 'books1.php'?>>
 										<i class="bi bi-book"></i>
 										<span class="menu-text">Books</span>
 									</a>
-									<div class="sidebar-submenu">
-										<ul>
-											<li>
-												<a href="accordions.html">View Books</a>
-											</li>
-											<li>
-												<a href="alerts.html">Books by Authors</a>
-											</li>
-											<li>
-												<a href="buttons.html">Category</a>
-											</li>
-										</ul>
-									</div>
+									
 								</li>
 								<li>
 								<a href="<?= 'users.php' ?>">

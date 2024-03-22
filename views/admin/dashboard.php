@@ -20,7 +20,7 @@ include("../layouts/Header.php");
 	<!-- Content wrapper start -->
 	<div class="content-wrapper">
 		<div class="subscribe-header">
-		<img src="<?=asset("assets/images/librarybg3.jpg")?>" class="img-fluid w-100" alt="Header" style="width: 250px; height: 450px;"/>
+		<img src="<?=asset("assets/images/librarybg3.jpg")?>" class="img-fluid w-100"  alt="Header" style="width: 250px; height: 450px;"/>
 		</div>
 	</div>
 	<!-- Content wrapper end -->
