@@ -102,6 +102,9 @@ $error = $sm->getAttribute("error");
                 
 			</form>
 		</div>
+		<div class="app-footer">
+					<span>© Library Management System</span>
+				</div>
 		<!-- Login box end -->
 	</body>
 

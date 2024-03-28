@@ -66,7 +66,7 @@ $users = $userModel->getAll();
                                     <td>
                                         <div class="">
                                             <?php if ($c['is_active'] == 1) { ?>
-                                                <span class="badge bg-success">Enable</span>
+                                                <span class="badge shade-green">Enable</span>
                                             <?php } else { ?>
                                                 <span class="badge bg-danger">Disable</span>
                                             <?php } ?>

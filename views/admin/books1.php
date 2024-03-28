@@ -66,17 +66,17 @@ $result = $conn->query($sql);
                             ?>
 
                             <div  class="book-row">
-                                <img src="<?=("book/". $row['bookImage']) ?>" class="rounded" width="100" alt="Admin Dashboards" />
-                                <div class="book-row"> <!-- Add class for each row -->
+                                <img src="<?=asset("services/uploads/" . $row['bookImage']) ?>" class="rounded" width="100" alt="Admin Dashboards" />
+                                <div class="book-row"> <!--Class of Search bar-->
                                     <h6><?=$row['BookName']?></h6></div>
-								<h7><?=$row['AuthorId']?></h7><br>
+								<h7><?=$row['AuthorName']?></h7><br>
 								<h7><?=$row['BookPrice']?></h7>
 
 								<div class="">
                                     <?php if ($row['isIssued'] == 1) { ?>
                                     <span class="badge shade-red">Already Issued</span>
                                     <?php } else { ?>
-                                    <span class="badge shade-green">Available</span>
+                                    <span class="badge shade-green"></span>
                                     <?php } ?>
                              	</div>
                             </div>

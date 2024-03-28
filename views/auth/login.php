@@ -57,7 +57,7 @@ $error = $sm->getAttribute("error");
 							<img src="<?=asset("assets/images/openbook3.PNG")?>" alt="Crowdnub Admin"/>   <div class="page-title d-none d-md-block"><h4  class="m-0" >Library<br>Management<br> System</h4 ></div>
 						</a>
 						<h5 class="fw-light mb-3">Sign in to access dashboard.</h5>
-						<form id="formAuthentication" class="mb-3" action="../../services/auth.php" method="post">
+						<form id="formAuthentication"0 class="mb-3" action="../../services/auth.php" method="post">
 						<div class="mb-3">
 							<label for="email" class="form-label">Your Email</label>
 							<input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" autofocus required />
@@ -93,7 +93,7 @@ $error = $sm->getAttribute("error");
 						</div> -->
 						<div class="text-center pt-3">
 							<span>Not registered?</span>
-							<a href="signup.html" class="text-blue text-decoration-underline ms-2">
+							<a href="<?=("/../../librarysql/views/admin/createacc.php")?>" class="text-blue text-decoration-underline ms-2">
 								Create an account</a>
 						
                    

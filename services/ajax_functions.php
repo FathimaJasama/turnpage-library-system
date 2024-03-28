@@ -2,72 +2,51 @@
 require_once '../config.php';
 require_once '../helpers/AppManager.php';
 require_once '../models/Treatment.php';
-
+require_once '../models/Booktable.php';
+require_once '../models/Student.php';
 require_once '../models/User.php';
 
 // Define target directory
 $target_dir = "../assets/uploads/";
 
-//create user
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_user') {
 
+//create student
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_student') {
     try {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $permission = $_POST['permission'];
-
-        $doctor_name = $_POST['doctor_name'] ?? null;
-        $about_doctor = $_POST['about_doctor'] ?? null;
-
-        // Get file information
-        $image = $_FILES["image"] ?? null;
-        $imageFileName = null;
-
-        // Check if file is uploaded
-        if (isset($image) && !empty($image)) {
-            // Check if there are errors
-            if ($image["error"] > 0) {
-                echo "Error uploading file: " . $image["error"];
-            } else {
-                // Check if file is an image
-                if (getimagesize($image["tmp_name"]) !== false) {
-                    // Check file size (optional)
-                    if ($image["size"] < 500000) { // 500kb limit
-                        // Generate unique filename
-                        $new_filename = uniqid() . "." . pathinfo($image["name"])["extension"];
-
-                        // Move uploaded file to target directory
-                        if (move_uploaded_file($image["tmp_name"], $target_dir . $new_filename)) {
-                            $imageFileName = $new_filename;
-                        } else {
-                            echo json_encode(['success' => false, 'message' => "Error moving uploaded file."]);
-                            exit;
-                        }
-                    } else {
-                        echo json_encode(['success' => false, 'message' => "File size is too large."]);
-                        exit;
-                    }
+        $StudentId = $_POST['StudentId'];
+        $FullName = $_POST['FullName'];
+        $Photo = $_FILES['Photo'];
+        $EmailId = $_POST['EmailId'];
+        $Password = $_POST['Password'];
+        $MobileNumber = $_POST['MobileNumber']; // assuming MobileNumber is the name of the input field
+        
+        // Check if file was uploaded without errors
+        if ($Photo['error'] === 0) {
+            // Specify directory where you want to store uploaded files
+            $uploadDir = 'uploads/';
+            
+            // Generate a unique name for the uploaded file
+            $fileName = uniqid() . '_' . $Photo['name'];
+            
+            // Move the uploaded file to the specified directory
+            $uploadPath = $uploadDir . $fileName;
+            if (move_uploaded_file($Photo['tmp_name'], $uploadPath)) {
+                // Create an instance of the Student model
+                $studentModel = new Student();
+                
+                // Call the createStudent method with correct parameters
+                $created =  $studentModel->createStudent($StudentId, $fileName, $FullName, $Password, $MobileNumber, $EmailId);
+                
+                if ($created) {
+                    echo json_encode(['success' => true, 'message' => "User created successfully!"]);
                 } else {
-                    echo json_encode(['success' => false, 'message' => "Uploaded file is not an image."]);
-                    exit;
+                    echo json_encode(['success' => false, 'message' => 'Failed to create user. Maybe student already exists!']);
                 }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file.']);
             }
-        }
-
-        $userModel = new User();
-        $created =  $userModel->createUser($username, $password, $permission, $email);
-        if ($created) {
-
-            if ($permission == 'doctor') {
-                $user_id = $userModel->getLastInsertedUserId();
-                $doctorModel = new Doctor();
-                $doctorCreated =  $doctorModel->createDoctor($doctor_name,  $about_doctor, $user_id, $imageFileName);
-            }
-
-            echo json_encode(['success' => true, 'message' => "User created successfully!"]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to create user. May be user already exist!']);
+            echo json_encode(['success' => false, 'message' => 'File upload error: ' . $Photo['error']]);
         }
     } catch (PDOException $e) {
         // Handle database connection errors
@@ -76,17 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
-//Get user by id
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id']) && isset($_GET['action']) &&  $_GET['action'] == 'get_user') {
+//Get student by id
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['student_id']) && isset($_GET['action']) &&  $_GET['action'] == 'get_student') {
 
     try {
-        $user_id = $_GET['user_id'];
-        $userModel = new User();
-        $user = $userModel->getById($user_id);
-        if ($user) {
-            echo json_encode(['success' => true, 'message' => "User created successfully!", 'data' => $user]);
+        $student_id = $_GET['student_id'];
+        $studentModel = new Student();
+        $student = $studentModel->getById($student_id);
+        if ($student) {
+            echo json_encode(['success' => true, 'message' => "Student created successfully!", 'data' => $student]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to create user. May be user already exist!']);
+            echo json_encode(['success' => false, 'message' => 'Failed to create student. May be student already exist!']);
         }
     } catch (PDOException $e) {
         // Handle database connection errors
@@ -95,18 +74,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id']) && isset($_G
     exit;
 }
 
-//Delete by user id
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['user_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_user') {
+//Delete by student id
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['student_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_student') {
 
     try {
-        $user_id = $_GET['user_id'];
-        $userModel = new User();
-        $deleted = $userModel->deleteUser($user_id);
+        $student_id = $_GET['student_id'];
+        $studentModel = new Student();
+        $deleted = $studentModel->deleteStudent($student_id);
 
         if ($deleted) {
-            echo json_encode(['success' => true, 'message' => "User deleted successfully!", 'data' => $deleted]);
+            echo json_encode(['success' => true, 'message' => "Student deleted successfully!", 'data' => $deleted]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to delete user.']);
+            echo json_encode(['success' => false, 'message' => 'Failed to delete student.']);
         }
     } catch (PDOException $e) {
         // Handle database connection errors
@@ -115,34 +94,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['user_id']) && isset($_GE
     exit;
 }
 
-//update user
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_user') {
+//update student
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_student') {
     try {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $permission = $_POST['permission'];
-        $is_active = $_POST['is_active'] == 1 ? 1 : 0;
+        $StudentId = $_POST['StudentId'];
+        $FullName = $_POST['FullName'];
+        $EmailId = $_POST['EmailId'];
+        $Password = $_POST['Password'];
+        $MobileNumber = $_POST['MobileNumber'];
+        $Status = $_POST['Status'] == 1 ? 1 : 0;
         $id = $_POST['id'];
 
         // Validate inputs
-        if (empty($username) || empty($email)) {
+        if (empty($StudentId) || empty($FullName) || empty($EmailId) || empty($MobileNumber)) {
             echo json_encode(['success' => false, 'message' => 'Required fields are missing!']);
             exit;
         }
 
         // Validate email format
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($EmailId, FILTER_VALIDATE_EMAIL)) {
             echo json_encode(['success' => false, 'message' => 'Invalid email address']);
             exit;
         }
 
-        $userModel = new User();
-        $updated =  $userModel->updateUser($id, $username, $password, $permission, $email, $is_active);
+        $studentModel = new Student();
+        $updated =  $studentModel->updateStudent($id, $StudentId, $FullName, $Password, $EmailId, $MobileNumber, $Status);
         if ($updated) {
-            echo json_encode(['success' => true, 'message' => "User updated successfully!"]);
+            echo json_encode(['success' => true, 'message' => "Student updated successfully!"]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to update user. May be user already exist!']);
+            echo json_encode(['success' => false, 'message' => 'Failed to update student. May be student already exist!']);
         }
     } catch (PDOException $e) {
         // Handle database connection errors
@@ -151,141 +131,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
-//create user
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_user') {
-
+//create book
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_book') {
     try {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $permission = $_POST['permission'];
+        $StudentId = $_POST['StudentId'];
+        $BookName = $_POST['BookName'];
+        $AuthorName = $_POST['AuthorName'];
+        $ISBNNumber = $_POST['ISBNNumber'];
+        $BookPrice = $_POST['BookPrice'];
+        $image = $_FILES["bookImage"];
+        $category = $_POST['category'];
 
-        $doctor_name = $_POST['doctor_name'] ?? null;
-        $about_doctor = $_POST['about_doctor'] ?? null;
-
-        // Get file information
-        $image = $_FILES["image"] ?? null;
-        $imageFileName = null;
-
-        // Check if file is uploaded
-        if (isset($image) && !empty($image)) {
-            // Check if there are errors
-            if ($image["error"] > 0) {
-                echo "Error uploading file: " . $image["error"];
-            } else {
-                // Check if file is an image
-                if (getimagesize($image["tmp_name"]) !== false) {
-                    // Check file size (optional)
-                    if ($image["size"] < 500000) { // 500kb limit
-                        // Generate unique filename
-                        $new_filename = uniqid() . "." . pathinfo($image["name"])["extension"];
-
-                        // Move uploaded file to target directory
-                        if (move_uploaded_file($image["tmp_name"], $target_dir . $new_filename)) {
-                            $imageFileName = $new_filename;
-                        } else {
-                            echo json_encode(['success' => false, 'message' => "Error moving uploaded file."]);
-                            exit;
-                        }
-                    } else {
-                        echo json_encode(['success' => false, 'message' => "File size is too large."]);
-                        exit;
-                    }
+         // Check if file was uploaded without errors
+        if ($image['error'] === 0) {
+            // Specify directory where you want to store uploaded files
+            $uploadDir = 'uploads/';
+            
+            // Generate a unique name for the uploaded file
+            $fileName = uniqid() . '_' . $image['name'];
+            
+            // Move the uploaded file to the specified directory
+            $uploadPath = $uploadDir . $fileName;
+            if (move_uploaded_file($image['tmp_name'], $uploadPath)) {
+                // Create an instance of the Book model
+                $bookModel = new Book();
+                
+                // Call the createStudent method with correct parameters
+                $created =  $bookModel->createBook($StudentId, $BookName, $AuthorName, $ISBNNumber, $BookPrice, $fileName, $category);
+                
+                if ($created) {
+                    echo json_encode(['success' => true, 'message' => "User created successfully!"]);
                 } else {
-                    echo json_encode(['success' => false, 'message' => "Uploaded file is not an image."]);
-                    exit;
+                    echo json_encode(['success' => false, 'message' => 'Failed to create user. Maybe student already exists!']);
                 }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file.']);
             }
-        }
-
-        $userModel = new User();
-        $created =  $userModel->createUser($username, $password, $permission, $email);
-        if ($created) {
-
-            if ($permission == 'doctor') {
-                $user_id = $userModel->getLastInsertedUserId();
-                $doctorModel = new Doctor();
-                $doctorCreated =  $doctorModel->createDoctor($doctor_name,  $about_doctor, $user_id, $imageFileName);
-            }
-
-            echo json_encode(['success' => true, 'message' => "User created successfully!"]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to create user. May be user already exist!']);
-        }
-    } catch (PDOException $e) {
-        // Handle database connection errors
-        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
-    }
-    exit;
-}
-
-//Get user by id
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id']) && isset($_GET['action']) &&  $_GET['action'] == 'get_user') {
-
-    try {
-        $user_id = $_GET['user_id'];
-        $userModel = new User();
-        $user = $userModel->getById($user_id);
-        if ($user) {
-            echo json_encode(['success' => true, 'message' => "User created successfully!", 'data' => $user]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to create user. May be user already exist!']);
-        }
-    } catch (PDOException $e) {
-        // Handle database connection errors
-        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
-    }
-    exit;
-}
-
-//Delete by user id
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['user_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_user') {
-
-    try {
-        $user_id = $_GET['user_id'];
-        $userModel = new User();
-        $deleted = $userModel->deleteUser($user_id);
-
-        if ($deleted) {
-            echo json_encode(['success' => true, 'message' => "User deleted successfully!", 'data' => $deleted]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to delete user.']);
-        }
-    } catch (PDOException $e) {
-        // Handle database connection errors
-        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
-    }
-    exit;
-}
-
-//update user
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_user') {
-    try {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $permission = $_POST['permission'];
-        $is_active = $_POST['is_active'] == 1 ? 1 : 0;
-        $id = $_POST['id'];
-
-        // Validate inputs
-        if (empty($username) || empty($email)) {
-            echo json_encode(['success' => false, 'message' => 'Required fields are missing!']);
-            exit;
-        }
-
-        // Validate email format
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(['success' => false, 'message' => 'Invalid email address']);
-            exit;
-        }
-
-        $userModel = new User();
-        $updated =  $userModel->updateUser($id, $username, $password, $permission, $email, $is_active);
-        if ($updated) {
-            echo json_encode(['success' => true, 'message' => "User updated successfully!"]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to update user. May be user already exist!']);
+            echo json_encode(['success' => false, 'message' => 'File upload error: ' . $image['error']]);
         }
     } catch (PDOException $e) {
         // Handle database connection errors
@@ -295,7 +178,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 
-
-
-
-dd('Access denied..!');

@@ -5,8 +5,9 @@ require_once 'BaseModel.php';
 class Student extends BaseModel
 {
     public $StudentId;
+    public $Photo;
     public $FullName;
-    public $EmailIdId;
+    public $EmailId;
     private $MobileNumber;
     private $Password;
     private $Status;
@@ -25,20 +26,21 @@ class Student extends BaseModel
 
         $param = array(
             ':StudentId' => $this->StudentId,
+            ':Photo' => $this->Photo,
             ':FullName' => $this->FullName,
-            ':EmailIdId' => $this->EmailIdId,
+            ':EmailId' => $this->EmailId,
             ':Password' => $this->Password,
             ':MobileNumber' => $this->MobileNumber,
             ':Status' => $this->Status
         );
 
-        return $this->pm->run("INSERT INTO " . $this->getTableName() . "(StudentId,FullName,Password,MobileNumber,EmailIdId,Status) values(:StudentId, :FullName, :Password, :MobileNumber, :EmailIdId, :Status)", $param);
+        return $this->pm->run("INSERT INTO " . $this->getTableName() . "(StudentId,Photo,FullName,Password,MobileNumber,EmailId,Status) values(:StudentId,:Photo, :FullName, :Password, :MobileNumber, :EmailId, :Status)", $param);
     }
 
     protected function updateRec()
     {
         // Check if the new StudentId or EmailId already exists (excluding the current user's record)
-        $existingStudent = $this->getStudentByStudentIdOrEmailIdWithId($this->StudentId, $this->EmailIdId, $this->id);
+        $existingStudent = $this->getStudentByStudentIdOrEmailIdWithId($this->StudentId, $this->EmailId, $this->id);
         if ($existingStudent) {
             // Handle the error (return an appropriate message or throw an exception)
             return false; // Or throw an exception with a specific error message
@@ -51,7 +53,8 @@ class Student extends BaseModel
 
         $param = array(
             ':StudentId' => $this->StudentId,
-            ':FullName' => $this->Fullname,
+            ':Photo' => $this->Photo,
+            ':FullName' => $this->FullName,
             ':Password' => $this->Password,
             ':MobileNumber' => $this->MobileNumber,
             ':EmailId' => $this->EmailId,
@@ -62,6 +65,7 @@ class Student extends BaseModel
             "UPDATE " . $this->getTableName() . " 
             SET 
                 StudentId = :StudentId, 
+                Photo = :Photo, 
                 FullName = :FullName, 
                 Password = :Password,
                 EmailId = :EmailId,
@@ -89,12 +93,12 @@ class Student extends BaseModel
         return $result; // Return the user if found, or false if not found
     }
 
-    function createStudent($StudentId, $FullName, $Password, $MobileNumber, $EmailIdId, $Status = 1)
+    function createStudent($StudentId, $Photo, $FullName, $Password, $MobileNumber, $EmailId, $Status = 1)
     {
         $studentModel = new Student();
 
         // Check if StudentId or EmailId already exists
-        $existingStudent = $studentModel->getUserByStudentIdOrEmailId($StudentId, $EmailIdId);
+        $existingStudent = $studentModel->getStudentByStudentIdOrEmailId($StudentId, $EmailId);
         if ($existingStudent) {
             // Handle the error (return an appropriate message or throw an exception)
             return false; // Or throw an exception with a specific error message
@@ -102,6 +106,7 @@ class Student extends BaseModel
 
         $student = new Student();
         $student->StudentId = $StudentId;
+        $student->Photo = $Photo;
         $student->FullName = $FullName;
         $student->Password = $Password;
         $student->MobileNumber = $MobileNumber;
@@ -116,7 +121,7 @@ class Student extends BaseModel
         }
     }
 
-    function updateStudent($id, $StudentId, $FullName, $Password, $MobileNumber, $EmailId, $Status = 1)
+    function updateStudent($id, $StudentId, $Photo, $FullName, $Password, $MobileNumber, $EmailId, $Status = 1)
     {
         $studentModel = new Student();
 
@@ -130,6 +135,7 @@ class Student extends BaseModel
         $student = new Student();
         $student->id = $id;
         $student->StudentId = $StudentId;
+        $student->Photo = $Photo;
         $student->FullName = $FullName;
         $student->Password = $Password;
         $student->MobileNumber = $MobileNumber;
@@ -144,7 +150,7 @@ class Student extends BaseModel
         }
     }
 
-    public function getStudetByStudentIdOrEmailId($StudentId, $EmailId)
+    public function getStudentByStudentIdOrEmailId($StudentId, $EmailId)
     {
         $param = array(
             ':StudentId' => $StudentId,

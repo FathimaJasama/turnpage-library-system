@@ -1,0 +1,31 @@
+StudentId,BookName,AuthorName,ISBNNumber,BookPrice,BookImage,isIssued,category,
+
+StudentId,
+BookName,
+AuthorName,
+ISBNNumber,
+BookPrice,
+BookImage,
+isIssued,
+category,
+
+$Book = new Book();
+
+$Book->StudentId = $StudentId;
+$Book->BookName = $BookName;
+$Book->AuthorName = $AuthorName;
+$Book->ISBNNumber = $ISBNNumber;
+$Book->BookPrice = $BookPrice;
+$Book->BookImage = $BookImage;
+$Book->isIssued = $isIssued;
+$Book->category = $category;
+$Book->addNewRec();
+
+        'StudentId' = :StudentId,
+        'BookName' = :BookName,
+        'AuthorName' = :AuthorName,
+        'ISBNNumber' = :ISBNNumber,
+        'BookPrice' = :BookPrice,
+        'BookImage' = :BookImage,
+        'isIssued' = :isIssued,
+        'category' = :category     

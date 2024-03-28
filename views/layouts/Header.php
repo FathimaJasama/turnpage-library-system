@@ -184,7 +184,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</a>
 								</li>
 								<li>
-									<a href="<?= 'tables.php' ?>">
+									<a href="<?= 'booktables-oop.php' ?>">
 										<i class="bi bi-journals"></i>
 										<span class="menu-text">Book Details</span>
 									</a>
@@ -200,6 +200,12 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 								<a href="<?= 'users.php' ?>">
 										<i class="bi bi-people-fill"></i>
 										<span class="menu-text">Users</span>
+									</a>
+								</li>	
+								<li>
+								<a href="<?= 'students.php' ?>">
+										<i class="bi bi-people-fill"></i>
+										<span class="menu-text">Students</span>
 									</a>
 								</li>	
 								<li>

@@ -23,6 +23,7 @@ class Treatment extends BaseModel
             ':treatment_fee' => $this->treatment_fee,
             ':registration_fee' => $this->registration_fee,
             ':is_active' => $this->is_active
+            
         );
         return $this->pm->run(
             "INSERT INTO 
