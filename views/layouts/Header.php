@@ -5,9 +5,9 @@ include __DIR__ . '/../../config.php';
 include __DIR__ . '/../../helpers/AppManager.php';
 
 $sm = AppManager::getSM();
-$username = $sm->getAttribute("username");
-$permission = $sm->getAttribute("permission");
-$user_id = $sm->getAttribute("userId");
+$Photo = $sm->getAttribute("Photo");
+$FullName = $sm->getAttribute("FullName");
+$student_id = $sm->getAttribute("studentId");
 
 
 
@@ -140,7 +140,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 							<a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
 								<span class="user-name d-none d-md-block">Michelle White</span>
 								<span class="avatar">
-									<img src="<?=asset("assets/images/user2.png")?>" alt="Admin Templates" />
+									<img src="<?=asset("services/uploads/66053b74106dd_jesala.jpg")?>" alt="Admin Templates" />
 									<span class="status online"></span>
 								</span>
 							</a>
@@ -196,12 +196,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</a>
 									
 								</li>
-								<li>
-								<a href="<?= 'users.php' ?>">
-										<i class="bi bi-people-fill"></i>
-										<span class="menu-text">Users</span>
-									</a>
-								</li>	
+								
 								<li>
 								<a href="<?= 'students.php' ?>">
 										<i class="bi bi-people-fill"></i>
@@ -209,9 +204,9 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</a>
 								</li>	
 								<li>
-									<a href="<?='forgot-password.php'?>">
+									<a href="<?='forgot-password-login.php'?>">
 										<i class="bi bi-emoji-expressionless"></i>
-										<span class="menu-text">Forgot Password</span>
+										<span class="menu-text">Change Password</span>
 									</a>
 								</li>
 							</ul>		

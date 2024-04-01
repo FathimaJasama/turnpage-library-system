@@ -23,7 +23,7 @@ $books = $bookModel->getAll();
 <!-- Main header ends -->
 
 <div class="content-wrapper">
-						<div class="subscribe-header">
+	<div class="subscribe-header">
     <section class="content m-3">
         
         <div class="container-fluid">
@@ -47,8 +47,8 @@ $books = $bookModel->getAll();
                                 <th class="">BookImage</th>
                                 <th class="">Status</th>
                                 <th class="">category</th>
-                                <th class="">Reg.Date</th>
-                                <th class="">Updated Date</th>
+                                <!-- <th class="">Reg.Date</th> -->
+                                <!-- <th class="">Updated Date</th> -->
                                 <!-- <th style="width: 200px">Options</th> -->
                             </tr>
                         </thead>
@@ -59,8 +59,8 @@ $books = $bookModel->getAll();
                                 <tr>
                                     <td><?= ++$key ?></td>
                                     <td><?= $c['StudentId'] ?? "";?></td>
-                                    <td> <?= $c['BookName'] ?? ""; ?> </td>
-                                    <td> <?= $c['AuthorName'] ?? ""; ?> </td>
+                                    <td><h6> <?= $c['BookName'] ?? ""; ?> </h6></td>
+                                    <td><h6> <?= $c['AuthorName'] ?? ""; ?> </h6></td>
                                     <td> <?= $c['ISBNNumber'] ?? ""; ?> </td>
                                     <td> <?= $c['BookPrice'] ?? ""; ?> </td>
                                     <td><img src="<?=asset("services/uploads/" .$c['bookImage']) ?? ""?>" class="rounded" width="100" alt="Google Admin" />
@@ -77,8 +77,7 @@ $books = $bookModel->getAll();
                                         </div>
                                     </td>
                                     <td> <?= $c['category'] ?? ""; ?></td>
-                                    <td> <?= $c['created_at'] ?? ""; ?></td>
-                                    <td> <?= $c['updated_at'] ?? ""; ?></td>
+                                    
                                     <td>
                                         <div>
                                             <button class="btn btn-sm btn-info m-2 edit-student" data-id="<?= $c['id']; ?>">Edit</button>

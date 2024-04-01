@@ -15,7 +15,7 @@ $students = $studentModel->getAll();
             <i class="bi bi-file-person-fill"></i>
         </div>
         <div class="page-title d-none d-md-block">
-            <h5>Students Details</h5>
+            <h5>Account Settings</h5>
         </div>
     </div>
 
@@ -24,155 +24,12 @@ $students = $studentModel->getAll();
 <div class="content-wrapper">
 	<div class="subscribe-header">   
    
-    <section class="content m-3">
-        
-        <div class="container-fluid">
-            
-            <div class="card">
-                
-                <!-- /.card-header -->
-                <div class="card-body p-0">
-                <button type="button" class="btn btn-primary float-end m-3" data-bs-toggle="modal" data-bs-target="#createStudentModal">
-            Create User
-        </button>
-                 <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th style="width: 10px">#</th>
-                                <th style="">Student ID</th>
-                                <th class="">Photo</th>
-                                <th class="">Full Name</th>
-                                <th class="">Email</th>
-                                <th class="">Mobile No.</th>
-                                <th class="">Status</th>
-                                <th class="">Actions</th>
-
-                         
-                                <!-- <th style="width: 200px">Options</th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            foreach ($students as $key => $c) {
-                            ?>
-                                <tr>
-                                    <td><?= ++$key ?></td>
-                                    <td><?= $c['StudentId'] ?? "";?></td>
-                                    <td>
-                                    <?php if (isset($c['Photo']) || !empty($c['Photo'])) : ?>
-                                            <img src="<?= asset('services/uploads/' . $c['Photo']) ?>" alt="user-avatar" class="d-block rounded m-3" width="80" id="uploadedAvatar">
-                                        <?php endif; ?>
-                                    </td>    
-                                    <td> <?= $c['FullName'] ?? ""; ?> </td>
-                                    <td> <?= $c['EmailId'] ?? ""; ?> </td>
-                                    <td> <?= $c['MobileNumber'] ?? ""; ?></td>
-                                    <td>
-                                        <div class="">
-                                            <?php if ($c['Status'] == 1) { ?>
-                                                <span class="badge shade-green">Enable</span>
-                                            <?php } else { ?>
-                                                <span class="badge bg-danger">Disable</span>
-                                            <?php } ?>
-                                        </div>
-                                    </td>
-                                        </div>
-                                    </td>
-                                    
-                                    <td>
-                                        <div>
-                                            <button class="btn btn-sm btn-info m-2 edit-student" data-id="<?= $c['id']; ?>">Edit</button>
-                                            <button class="btn btn-sm btn-danger m-2 delete-student" data-id="<?= $c['id']; ?>">Delete</button>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.card-body -->
-            </div>
-        </div>
-    </section>
+   
 </div>
 
-<!-- Modal -->
-<div class="modal fade " id="createStudentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form id="create-student-form" action="<?= url('services/ajax_functions.php') ?>" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="create_student">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Create Student</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
 
-                <div class="modal-body">
-                <div class="row">
-                        <div class="col mb-3">
-                            <label for="StudentId" class="form-label">Student Id</label>
-                            <input type="text" id="StudentId" name="StudentId" class="form-control" placeholder="Enter Student Id" required />
-                        </div>
-                    </div>
-                    <div class="col-12 mb-3">
-                    <label for="Photo" class="form-label">Photo</label>
-                    <input class="form-control" name="Photo" id="Photo" type="file" accept="image/*">
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="FullName" class="form-label">Full Name</label>
-                            <input type="text" id="FullName" name="FullName" class="form-control" placeholder="Enter Name" required />
-                        </div>
-                    </div>
-                    <div class="row g-1">
-                        <div class="col mb-0">
-                            <label for="EmailId" class="form-label">Email</label>
-                            <input type="email" id="EmailId" name="EmailId" class="form-control" placeholder="xxxx@xxx.xx" required />
-                        </div>
-                    </div>
-                    <div class="row g-2 mt-2">
-                        <div class="col mb-0 form-password-toggle">
-                            <label class="form-label" for="Password">Password</label>
-                            <div class="input-group">
-                                <input type="password" name="Password" class="form-control" id="Password" placeholder="············" aria-describedby="basic-default-password2" required>
-                                <span id="basic-default-Password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                        </div>
-                        <div class="col mb-0 form-password-toggle">
-                            <label class="form-label" for="basic-default-password12">Confirm Password</label>
-                            <div class="input-group">
-                                <input type="password" name="confirm_password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2" required>
-                                <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-1">
-                        <div class="col mb-0">
-                            <label for="MobileNumber" class="form-label">Mobile Number</label>
-                            <input type="tel" id="MobileNumber" name="MobileNumber" class="form-control" placeholder="123-456-7890" required />
-                        </div>
-                    </div>
-                    <div id="additional-fields"></div>
-                    <div class="mb-3 mt-3">
-                        <div id="alert-container"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" id="create-now" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<!-- Update Student Modal -->
 
-<div class="modal fade " id="editStudentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="update-student-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off" enctype="multipart/form-data">
@@ -196,7 +53,7 @@ $students = $studentModel->getAll();
                     <div class="row">
                         <div class="col mb-3">
                             <label for="FullName" class="form-label">Full Name</label>
-                            <input type="text" id="FullName" name="FullName" class="form-control" placeholder="Enter Name" required />
+                            <input type="text" id="FullName" name="FullName" class="form-control" value="<?php echo htmlentities($result->FullName);?>" required />
                         </div>
                     </div>
                     <div class="row g-1">

@@ -1,5 +1,6 @@
 <?php
 include("../layouts/Header.php");
+
 ?>
 			<!-- Content wrapper scroll start -->
 				<div class="content-wrapper-scroll">
@@ -21,7 +22,7 @@ include("../layouts/Header.php");
 					<!-- Content wrapper start -->
 					<div class="content-wrapper">
 						<div class="subscribe-header">
-							<img src="<?=asset('assets/images/bg.jpg')?>" class="img-fluid w-100" alt="Header" />
+							<img src="<?=asset('assets/images/rifdha1.PNG')?>" class="img-fluid w-100" alt="Header" />
 							
 						</div>
 						<div class="subscriber-body">
@@ -31,11 +32,11 @@ include("../layouts/Header.php");
 									<!-- Row start -->
 									<div class="row align-items-end">
 										<div class="col-auto">
-											<img src="<?=asset("assets/images/user2.png")?>" class="img-7xx rounded-circle" />
-										</div>
+										<img src="<?= asset("services/uploads/66053b74106dd_jesala.jpg")?>" class="img-7xx rounded-circle" alt="Google Admin" />
+									</div>
 										<div class="col">
 											<h6>Admin</h6>  
-											<h4 class="m-0">Michelle White</h4>
+											<h4 class="m-0"><?= $FullName?></h4>
 										</div>
 										
 									</div>
@@ -101,7 +102,7 @@ include("../layouts/Header.php");
 																			<label for="birthDay" class="form-label">Birthday</label>
 																			<div class="input-group">
 																				<input type="text" class="form-control datepicker-opens-left" id="birthDay"
-																					placeholder="DD/MM/YYYY" />
+																					placeholder="" />
 																				<span class="input-group-text">
 																					<i class="bi bi-calendar4"></i>
 																				</span>

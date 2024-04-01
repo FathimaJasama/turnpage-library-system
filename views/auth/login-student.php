@@ -75,7 +75,7 @@ $error = $sm->getAttribute("error");
 								<input class="form-check-input" type="checkbox" value="" id="rememberPassword" />
 								<label class="form-check-label" for="rememberPassword">Remember</label>
 							</div>
-							<a href="forgot-password.html" class="text-blue text-decoration-underline">Lost password?</a>
+							<a href="<?=asset("views/admin/forgot-password-login.php")?>" class="text-blue text-decoration-underline">Lost password?</a>
 						</div>
 						<div class="d-grid py-3">
 							<button type="submit" class="btn btn-lg btn-primary">
@@ -93,7 +93,7 @@ $error = $sm->getAttribute("error");
 						</div> -->
 						<div class="text-center pt-3">
 							<span>Not registered?</span>
-							<a href="<?=("/../../librarysql/views/admin/createacc.php")?>" class="text-blue text-decoration-underline ms-2">
+							<a href="<?=asset("views/admin/createacc.php")?>" class="text-blue text-decoration-underline ms-2">
 								Create an account</a>
 						
                    

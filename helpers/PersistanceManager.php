@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Project Name: Library
+ * Project Name: Library Management System
  * Author: Jasama Jahankeer
  */
 

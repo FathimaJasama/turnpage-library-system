@@ -4,15 +4,18 @@ require_once('../layouts/Header.php');
 
 // DB credentials.
 
-// Establish database connection.
-try
-{
-$dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USERNAME, DB_PASSWORD,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-}
-catch (PDOException $e)
-{
-exit("Error: " . $e->getMessage());
-}
+$pm = AppManager::getPM();
+$sm = AppManager::getSM();
+
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+if (empty($email) || empty($password)) {
+    $sm->setAttribute("error", 'Please fill all required fields!');
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+} else {
+    $param = array(':email' => $email);
+
 
 $message = ''; // Initialize an empty variable to store alert messages.
 
@@ -21,7 +24,8 @@ if(isset($_POST['submit'])) {
     $newpassword = md5($_POST['newpassword']);
 
     // Check if the provided email exists in the database
-    $sql = "SELECT EmailId FROM students WHERE EmailId = :email";
+    $param = array(':email' => $EmailId);
+    $sql = $pm->run("SELECT EmailId FROM students WHERE EmailId = :email");
     $query = $dbh->prepare($sql);
     $query->bindParam(':email', $email, PDO::PARAM_STR);
     $query->execute();
@@ -29,11 +33,9 @@ if(isset($_POST['submit'])) {
 
     if($query->rowCount() > 0) {
         // Update the password for the provided email
-        $sql = "UPDATE students SET Password = :newpassword WHERE EmailId = :email";
-        $chngpwd = $dbh->prepare($sql);
-        $chngpwd->bindParam(':email', $email, PDO::PARAM_STR);
-        $chngpwd->bindParam(':newpassword', $newpassword, PDO::PARAM_STR);
-        $chngpwd->execute();
+        $password = $pm->run("UPDATE students SET Password = :newpassword WHERE EmailId = :email");
+        if ($password != null) {
+    
         $message = "Your password has been successfully changed.";
     } else {
         $message = "Email does not exist.";

@@ -98,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['student_id']) && isset($
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_student') {
     try {
         $StudentId = $_POST['StudentId'];
+        $Photo = $_FILES['Photo'];
         $FullName = $_POST['FullName'];
         $EmailId = $_POST['EmailId'];
         $Password = $_POST['Password'];
@@ -117,19 +118,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             exit;
         }
 
-        $studentModel = new Student();
-        $updated =  $studentModel->updateStudent($id, $StudentId, $FullName, $Password, $EmailId, $MobileNumber, $Status);
-        if ($updated) {
-            echo json_encode(['success' => true, 'message' => "Student updated successfully!"]);
+           // Check if file was uploaded without errors
+           if ($Photo['error'] === 0) {
+            // Specify directory where you want to store uploaded files
+            $uploadDir = 'uploads/';
+            
+            // Generate a unique name for the uploaded file
+            $fileName = uniqid() . '_' . $Photo['name'];
+            
+            // Move the uploaded file to the specified directory
+            $uploadPath = $uploadDir . $fileName;
+            if (move_uploaded_file($Photo['tmp_name'], $uploadPath)) {
+                // Create an instance of the Student model
+            $studentModel = new Student();
+
+            // Call the createStudent method with correct parameters
+            $updated =  $studentModel->updateStudent($id, $StudentId, $fileName, $FullName, $Password, $MobileNumber, $EmailId);
+                
+            if ($updated) {
+                echo json_encode(['success' => true, 'message' => "Student updated successfully!"]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to update student. Maybe student already exists!']);
+            }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to update student. May be student already exist!']);
+            echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file.']);
         }
-    } catch (PDOException $e) {
-        // Handle database connection errors
-        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'File upload error: ' . $Photo['error']]);
     }
-    exit;
+} catch (PDOException $e) {
+    // Handle database connection errors
+    echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
 }
+exit;
+}
+
+
 
 //create book
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_book') {

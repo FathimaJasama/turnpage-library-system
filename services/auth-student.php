@@ -20,6 +20,7 @@ if (empty($EmailId) || empty($Password)) {
 
             $sm->setAttribute("studentId", $student['id']);
             $sm->setAttribute("StudentId", $student['StudentId']);
+            $sm->setAttribute("Photo", $student['Photo']);
             $sm->setAttribute("FullName", $student['FullName']);
             $sm->setAttribute("MobileNumber", $student['MobileNumber']);
 

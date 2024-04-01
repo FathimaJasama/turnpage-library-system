@@ -87,7 +87,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 <body class="login-container text:align-centre">
 		<!-- Login box start -->
 		<div class="container">
-				<div class="login-box rounded-4 p-4">
+				<div class="login-box rounded-5 p-4">
 					<div class="login-form">
 						<a href="#" class="login-logo mb-3">
 							<img src="<?=asset("assets/images/openbook3.PNG")?>" alt="Crowdnub Admin"/>   <div class="page-title d-none d-md-block"><h4  class="m-0" >Library<br>Management<br> System</h4 ></div>
@@ -105,6 +105,10 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                             <label for="StudentId" class="form-label">Student Id</label>
                             <input type="text" id="StudentId" name="StudentId" class="form-control" placeholder="Enter Student Id" required />
                         </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                    <label for="Photo" class="form-label">Photo</label>
+                    <input class="form-control" name="Photo" id="editPhoto" type="file" accept="image/*">
                     </div>
                     <div class="row">
                         <div class="col mb-3">

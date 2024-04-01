@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Project Name: Tooth Care - Channeling Appoinments
- * Author: Musab Ibn Siraj
- */
 
 require_once 'PersistanceManager.php';
 require_once 'SessionManager.php';
