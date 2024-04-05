@@ -39,7 +39,7 @@ $books = $bookModel->getAll();
                         <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
-                                <th style="">StudentId</th>
+                                <th class="">StudentId</th>
                                 <th class="">BookName</th>
                                 <th class="">AuthorName</th>
                                 <th class="">ISBNNumber</th>
@@ -301,7 +301,4 @@ require_once('../layouts/Footer.php');
         
         });
     
-
-    
-
 </script>

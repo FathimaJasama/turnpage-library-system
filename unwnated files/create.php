@@ -115,4 +115,5 @@
                 showAlert(message, 'danger');
             }
         });
+    }
         </script>

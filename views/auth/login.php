@@ -93,7 +93,7 @@ $error = $sm->getAttribute("error");
 						</div> -->
 						<div class="text-center pt-3">
 							<span>Not registered?</span>
-							<a href="<?=("/../../librarysql/views/admin/createacc.php")?>" class="text-blue text-decoration-underline ms-2">
+							<a href="<?=asset("views/admin/createacc.php")?>" class="text-blue text-decoration-underline ms-2">
 								Create an account</a>
 						
                    

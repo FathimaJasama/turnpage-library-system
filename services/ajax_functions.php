@@ -5,6 +5,7 @@ require_once '../models/Treatment.php';
 require_once '../models/Booktable.php';
 require_once '../models/Student.php';
 require_once '../models/User.php';
+require_once '../models/category.php';
 
 // Define target directory
 $target_dir = "../assets/uploads/";
@@ -74,26 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['student_id']) && isset(
     exit;
 }
 
-//Delete by student id
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['student_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_student') {
-
-    try {
-        $student_id = $_GET['student_id'];
-        $studentModel = new Student();
-        $deleted = $studentModel->deleteStudent($student_id);
-
-        if ($deleted) {
-            echo json_encode(['success' => true, 'message' => "Student deleted successfully!", 'data' => $deleted]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to delete student.']);
-        }
-    } catch (PDOException $e) {
-        // Handle database connection errors
-        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
-    }
-    exit;
-}
-
 //update student
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_student') {
     try {
@@ -153,7 +134,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 exit;
 }
 
+//Delete by student id
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['student_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_student') {
 
+    try {
+        $student_id = $_GET['student_id'];
+        $studentModel = new Student();
+        $deleted = $studentModel->deleteStudent($student_id);
+
+        if ($deleted) {
+            echo json_encode(['success' => true, 'message' => "Student deleted successfully!", 'data' => $deleted]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete student.']);
+        }
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}
 
 //create book
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_book') {
@@ -201,4 +200,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
+
+
+//create category
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_category') {
+    try {
+        $CategoryName = $_POST['CategoryName'];
+      
+      
+                // Create an instance of the Book model
+                $categoryModel = new Category();
+                
+                // Call the createStudent method with correct parameters
+                $created =  $categoryModel->createCategory($CategoryName);
+                
+                if ($created) {
+                    echo json_encode(['success' => true, 'message' => "Category created successfully!"]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Failed to create user. Maybe category already exists!']);
+                }
+            
+       
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}
+
+
+
+
+//update category
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_category') {
+    try {
+        $CategoryName = $_POST['CategoryName'];
+        $Status = $_POST['Status'] == 1 ? 1 : 0;
+        $id = $_POST['id'];
+
+        // Validate inputs
+        if (empty($CategoryName)) {
+            echo json_encode(['success' => false, 'message' => 'Required fields are missing!']);
+            exit;
+        }
+
+            $categoryModel = new Category();
+
+            // Call the createStudent method with correct parameters
+            $updated =  $categoryModel->updateCategory($id, $CategoryName, $Status);
+                
+            if ($updated) {
+                echo json_encode(['success' => true, 'message' => "Student updated successfully!"]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to update student. Maybe student already exists!']);
+            }
+        } catch (PDOException $e) {
+    // Handle database connection errors
+    echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+}
+exit;
+}
+
+//Delete by category id
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['student_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_student') {
+
+    try {
+        $category_id = $_GET['category_id'];
+        $categoryModel = new Category();
+        $deleted = $studentModel->deleteCategory($category_id);
+
+        if ($deleted) {
+            echo json_encode(['success' => true, 'message' => "Student deleted successfully!", 'data' => $deleted]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete student.']);
+        }
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}
 

@@ -173,50 +173,6 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 ?>
 <script>
     $(document).ready(function() {
-
-        // Handle modal button click
-        // $('#create-now').on('click', function() {
-
-        //     // Get the form element
-        //     var form = $('#create-user-form')[0];
-        //     $('#create-user-form')[0].reportValidity();
-
-        //     // Check form validity
-        //     if (form.checkValidity()) {
-        //         // Serialize the form data
-        //         var formData = $('#create-user-form').serialize();
-        //         var formAction = $('#create-user-form').attr('action');
-
-        //         // Perform AJAX request
-        //         $.ajax({
-        //             url: formAction,
-        //             type: 'POST',
-        //             data: formData, // Form data
-        //             dataType: 'json',
-        //             success: function(response) {
-        //                 showAlert(response.message, response.success ? 'primary' : 'danger');
-        //                 if (response.success) {
-        //                     $('#createUserModal').modal('hide');
-        //                     setTimeout(function() {
-        //                         location.reload();
-        //                     }, 1000);
-        //                 }
-        //             },
-        //             error: function(error) {
-        //                 // Handle the error
-        //                 console.error('Error submitting the form:', error);
-        //             },
-        //             complete: function(response) {
-        //                 // This will be executed regardless of success or error
-        //                 console.log('Request complete:', response);
-        //             }
-        //         });
-        //     } else {
-        //         var message = ('Form is not valid. Please check your inputs.');
-        //         showAlert(message, 'danger');
-        //     }
-        // });
-
         $('#create-now').on('click', function() {
             // Get the form element
             var form = $('#create-student-form')[0];
@@ -259,15 +215,6 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
             }
         });
 
-
-      
-
-        
-                      
-
-       
-
-        
         });
     
 

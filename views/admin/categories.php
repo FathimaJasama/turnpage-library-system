@@ -1,9 +1,9 @@
 <?php
 require_once('../layouts/Header.php');
-require_once __DIR__ . '/../../models/Student.php';
+require_once __DIR__ . '/../../models/Category.php';
 
-$studentModel = new Student();
-$students = $studentModel->getAll();
+$categoryModel = new Category();
+$categories = $categoryModel->getAll();
 
 ?>
 <div class="content-wrapper-scroll">
@@ -15,7 +15,7 @@ $students = $studentModel->getAll();
             <i class="bi bi-file-person-fill"></i>
         </div>
         <div class="page-title d-none d-md-block">
-            <h5>Students Details</h5>
+            <h5>Category</h5>
         </div>
     </div>
 
@@ -39,13 +39,10 @@ $students = $studentModel->getAll();
                         <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
-                                <th class="">Student ID</th>
-                                <th class="">Photo</th>
-                                <th class="">Full Name</th>
-                                <th class="">Email</th>
-                                <th class="">Mobile No.</th>
+                                <th class="">Category</th>
                                 <th class="">Status</th>
-                                <th class="">Actions</th>
+                                <th class="">Created_at</th>
+                                <th class="">Updated_at</th>
 
                          
                                 <!-- <th style="width: 200px">Options</th> -->
@@ -53,19 +50,11 @@ $students = $studentModel->getAll();
                         </thead>
                         <tbody>
                             <?php
-                            foreach ($students as $key => $c) {
+                            foreach ($categories as $key => $c) {
                             ?>
                                 <tr>
                                     <td><?= ++$key ?></td>
-                                    <td><?= $c['StudentId'] ?? "";?></td>
-                                    <td>
-                                    <?php if (isset($c['Photo']) || !empty($c['Photo'])) : ?>
-                                            <img src="<?= asset('services/uploads/' . $c['Photo']) ?>" alt="user-avatar" class="d-block rounded m-3" width="80" id="uploadedAvatar">
-                                        <?php endif; ?>
-                                    </td>    
-                                    <td> <?= $c['FullName'] ?? ""; ?> </td>
-                                    <td> <?= $c['EmailId'] ?? ""; ?> </td>
-                                    <td> <?= $c['MobileNumber'] ?? ""; ?></td>
+                                    <td><?= $c['CategoryName'] ?? "";?></td>    
                                     <td>
                                         <div class="">
                                             <?php if ($c['Status'] == 1) { ?>
@@ -74,14 +63,16 @@ $students = $studentModel->getAll();
                                                 <span class="badge bg-danger">Disable</span>
                                             <?php } ?>
                                         </div>
-                                    </td>
+                                    </td>                                    <td> <?= $c['CreationDate'] ?? ""; ?> </td>
+                                    <td> <?= $c['UpdationDate'] ?? ""; ?></td>
+                                    
                                         </div>
                                     </td>
                                     
                                     <td>
                                         <div>
-                                            <button class="btn btn-sm btn-info m-2 edit-student" data-id="<?= $c['id']; ?>">Edit</button>
-                                            <button class="btn btn-sm btn-danger m-2 delete-student" data-id="<?= $c['id']; ?>">Delete</button>
+                                            <button class="btn btn-sm btn-info m-2 edit-category" data-id="<?= $c['id']; ?>">Edit</button>
+                                            <button class="btn btn-sm btn-danger m-2 delete-category" data-id="<?= $c['id']; ?>">Delete</button>
 
                                         </div>
                                     </td>
@@ -99,11 +90,11 @@ $students = $studentModel->getAll();
 </div>
 
 <!-- Modal -->
-<div class="modal fade " id="createStudentModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade " id="createCategoryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="create-student-form" action="<?= url('services/ajax_functions.php') ?>" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="create_student">
+            <form id="create-category-form" action="<?= url('services/ajax_functions.php') ?>" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="create_category">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel1">Create Student</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -112,47 +103,10 @@ $students = $studentModel->getAll();
                 <div class="modal-body">
                 <div class="row">
                         <div class="col mb-3">
-                            <label for="StudentId" class="form-label">Student Id</label>
-                            <input type="text" id="StudentId" name="StudentId" class="form-control" placeholder="Enter Student Id" required />
+                            <label for="Category" class="form-label">Category</label>
+                            <input type="text" id="Category" name="Category" class="form-control" placeholder="Enter Category" required />
                         </div>
                     </div>
-                    <div class="col-12 mb-3">
-                    <label for="Photo" class="form-label">Photo</label>
-                    <input class="form-control" name="Photo" id="Photo" type="file" accept="image/*">
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="FullName" class="form-label">Full Name</label>
-                            <input type="text" id="FullName" name="FullName" class="form-control" placeholder="Enter Name" required />
-                        </div>
-                    </div>
-                    <div class="row g-1">
-                        <div class="col mb-0">
-                            <label for="EmailId" class="form-label">Email</label>
-                            <input type="email" id="EmailId" name="EmailId" class="form-control" placeholder="xxxx@xxx.xx" required />
-                        </div>
-                    </div>
-                    <div class="row g-2 mt-2">
-                        <div class="col mb-0 form-password-toggle">
-                            <label class="form-label" for="Password">Password</label>
-                            <div class="input-group">
-                                <input type="password" name="Password" class="form-control" id="Password" placeholder="············" aria-describedby="basic-default-password2" required>
-                                <span id="basic-default-Password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                        </div>
-                        <div class="col mb-0 form-password-toggle">
-                            <label class="form-label" for="basic-default-password12">Confirm Password</label>
-                            <div class="input-group">
-                                <input type="password" name="confirm_password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2" required>
-                                <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-1">
-                        <div class="col mb-0">
-                            <label for="MobileNumber" class="form-label">Mobile Number</label>
-                            <input type="tel" id="MobileNumber" name="MobileNumber" class="form-control" placeholder="123-456-7890" required />
-                        </div>
                     </div>
                     <div id="additional-fields"></div>
                     <div class="mb-3 mt-3">
@@ -172,61 +126,23 @@ $students = $studentModel->getAll();
 
 <!-- Update Student Modal -->
 
-<div class="modal fade " id="editStudentModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade " id="editCategoryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="update-student-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="update_student">
-                <input type="hidden" name="id" id="student_id">
+            <form id="update-category-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="update_category">
+                <input type="hidden" name="id" id="category_id">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Edit Student</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Edit Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="StudentId" class="form-label">Student ID</label>
-                            <input type="text" id="StudentId" name="StudentId" class="form-control" placeholder="Enter Name" required />
+                            <label for="CategoryName" class="form-label">Category</label>
+                            <input type="text" id="CategoryName" name="CategoryName" class="form-control" placeholder="Enter Name" required />
                         </div>
                     </div>
-                    <div class="col-12 mb-3">
-                    <label for="Photo" class="form-label">Photo</label>
-                    <input class="form-control" name="Photo" id="editPhoto" type="file" accept="image/*">
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="FullName" class="form-label">Full Name</label>
-                            <input type="text" id="FullName" name="FullName" class="form-control" placeholder="Enter Name" required />
-                        </div>
-                    </div>
-                    <div class="row g-1">
-                        <div class="col mb-0">
-                            <label for="EmailId" class="form-label">Email</label>
-                            <input type="email" id="EmailId" name="EmailId" class="form-control" placeholder="xxxx@xxx.xx" required />
-                        </div>
-                    </div>
-                    <div class="row g-2 mt-2">
-                        <div class="col mb-0 form-password-toggle">
-                            <label class="form-label" for="Password">Password</label>
-                            <div class="input-group">
-                                <input type="password" name="Password" class="form-control" id="Password" placeholder="············" aria-describedby="basic-default-password2" required>
-                                <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                        </div>
-                        <div class="col mb-0 form-password-toggle">
-                            <label class="form-label" for="basic-default-password12">Confirm Password</label>
-                            <div class="input-group">
-                                <input type="password" name="confirm_password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2" required>
-                                <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                        </div>
-                        <div class="row g-1">
-                        <div class="col mb-0">
-                            <label for="MobileNumber" class="form-label">Mobile Number</label>
-                            <input type="tel" id="MobileNumber" name="MobileNumber" class="form-control" placeholder="123-456-7890" required />
-                        </div>
-                    </div>
-                  
                     <div class="row mt-3">
                         <div class="col mb-0">
                             <label class="form-label" for="Status">Status</label>
@@ -266,26 +182,26 @@ $(document).ready(function() {
 // Handle modal button click
 $('#create-now').on('click', function() {
     // Get the form element
-    var form = $('#create-student-form')[0];
-    $('#create-student-form')[0].reportValidity();
+    var form = $('#create-category-form')[0];
+    $('#create-category-form')[0].reportValidity();
 
     // Check form validity
     if (form.checkValidity()) {
         // Create a FormData object
-        var formData = new FormData($('#create-student-form')[0]);
+        var formData = new FormData($('#create-category-form')[0]);
 
         // Perform AJAX request
         $.ajax({
-            url: $('#create-student-form').attr('action'),
+            url: $('#create-category-form').attr('action'),
             type: 'POST',
             data: formData,
             contentType: false, // Don't set content type
             processData: false, // Don't process the data
             dataType: 'json',
             success: function(response) {
-                showAlert(response.message, response.success ? 'green' : 'red');
+                showAlert(response.message, response.success ? 'green' : 'danger');
                 if (response.success) {
-                    $('#createStudentModal').modal('hide');
+                    $('#createCategoryModal').modal('hide');
                     setTimeout(function() {
                         location.reload();
                     }, 1000);
@@ -306,29 +222,29 @@ $('#create-now').on('click', function() {
     }
 });
 
-$('.edit-student').on('click', async function() {
+$('.edit-category').on('click', async function() {
     var student_id = $(this).data('id');
-    await getStudentById(student_id);
+    await getCategoryById(category_id);
 })
 
 $('.delete-student').on('click', async function() {
-            var student_id = $(this).data('id');
+            var category_id = $(this).data('id');
             var is_confirm = confirm('Are you sure,Do you want to delete?');
-            if (is_confirm) await deleteById(student_id);
+            if (is_confirm) await deleteById(category_id);
         })
 
 // update student form
 // handle update modal button click
 $('#update-now').on('click', function() {
     // Get the form element
-    var form = $('#update-student-form')[0];
-    $('#update-student-form')[0].reportValidity();
+    var form = $('#update-category-form')[0];
+    $('#update-category-form')[0].reportValidity();
 
     // Check form validity
     if (form.checkValidity()) {
         // Serialize the form data
-        var formAction = $('#update-student-form').attr('action');
-        var formData = new FormData($('#update-student-form')[0]);
+        var formAction = $('#update-category-form').attr('action');
+        var formData = new FormData($('#update-category-form')[0]);
 
         // Perform AJAX request
         $.ajax({
@@ -341,7 +257,7 @@ $('#update-now').on('click', function() {
             success: function(response) {
                 showAlert(response.message, response.success ? 'success' : 'red', 'alert-container-update-form');
                 if (response.success) {
-                    $('#editStudentModal').modal('hide');
+                    $('#editCategoryModal').modal('hide');
                     setTimeout(function() {
                         location.reload();
                     }, 1000);
@@ -409,7 +325,7 @@ async function getStudentById(id) {
 
 });
 async function deleteById(id) {
-        var formAction = $('#update-student-form').attr('action');
+        var formAction = $('#update-category-form').attr('action');
 
         // Perform AJAX request
         $.ajax({

@@ -4,7 +4,6 @@ require_once __DIR__ . '/../../models/Student.php';
 
 $studentModel = new Student();
 $students = $studentModel->getAll();
-
 ?>
 <div class="content-wrapper-scroll">
 
@@ -23,13 +22,14 @@ $students = $studentModel->getAll();
 
 <div class="content-wrapper">
 	<div class="subscribe-header">   
-   
-   
-</div>
+    <section class="content m-3">
+        
+        <div class="container-fluid">
+            
+            <div class="card">
 
-
-
-
+    </div>
+    <div class="modal fade " id="editStudentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="update-student-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off" enctype="multipart/form-data">
@@ -53,7 +53,7 @@ $students = $studentModel->getAll();
                     <div class="row">
                         <div class="col mb-3">
                             <label for="FullName" class="form-label">Full Name</label>
-                            <input type="text" id="FullName" name="FullName" class="form-control" value="<?php echo htmlentities($result->FullName);?>" required />
+                            <input type="text" id="FullName" name="FullName" class="form-control"  required />
                         </div>
                     </div>
                     <div class="row g-1">
@@ -84,18 +84,7 @@ $students = $studentModel->getAll();
                         </div>
                     </div>
                   
-                    <div class="row mt-3">
-                        <div class="col mb-0">
-                            <label class="form-label" for="Status">Status</label>
-                            <div class="input-group">
-                                <select class="form-select" id="Status" name="Status" required>
-                                    <option selected="" value="">Choose...</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="mb-3 mt-3">
                         <div id="alert-container-update-form"></div>
                     </div>
@@ -120,59 +109,12 @@ require_once('../layouts/Footer.php');
 <script>
 $(document).ready(function() {
 
-// Handle modal button click
-$('#create-now').on('click', function() {
-    // Get the form element
-    var form = $('#create-student-form')[0];
-    $('#create-student-form')[0].reportValidity();
-
-    // Check form validity
-    if (form.checkValidity()) {
-        // Create a FormData object
-        var formData = new FormData($('#create-student-form')[0]);
-
-        // Perform AJAX request
-        $.ajax({
-            url: $('#create-student-form').attr('action'),
-            type: 'POST',
-            data: formData,
-            contentType: false, // Don't set content type
-            processData: false, // Don't process the data
-            dataType: 'json',
-            success: function(response) {
-                showAlert(response.message, response.success ? 'green' : 'red');
-                if (response.success) {
-                    $('#createStudentModal').modal('hide');
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
-                }
-            },
-            error: function(error) {
-                // Handle the error
-                console.error('Error submitting the form:', error);
-            },
-            complete: function(response) {
-                // This will be executed regardless of success or error
-                console.log('Request complete:', response);
-            }
-        });
-    } else {
-        var message = ('Form is not valid. Please check your inputs.');
-        showAlert(message, 'red');
-    }
-});
-
 $('.edit-student').on('click', async function() {
     var student_id = $(this).data('id');
     await getStudentById(student_id);
 })
 
-$('.delete-student').on('click', async function() {
-            var student_id = $(this).data('id');
-            var is_confirm = confirm('Are you sure,Do you want to delete?');
-            if (is_confirm) await deleteById(student_id);
-        })
+
 
 // update student form
 // handle update modal button click
@@ -265,35 +207,7 @@ async function getStudentById(id) {
 }
 
 });
-async function deleteById(id) {
-        var formAction = $('#update-student-form').attr('action');
 
-        // Perform AJAX request
-        $.ajax({
-            url: formAction,
-            type: 'GET',
-            data: {
-                student_id: id,
-                action: 'delete_student'
-            }, // Form data
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
-                }
-            },
-            error: function(error) {
-                // Handle the error
-                console.error('Error submitting the form:', error);
-            },
-            complete: function(response) {
-                // This will be executed regardless of success or error
-                console.log('Request complete:', response);
-            }
-        });
-    }
 
     
 

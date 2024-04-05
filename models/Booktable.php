@@ -45,7 +45,6 @@ class Book extends BaseModel
             return false; // Or throw an exception with a specific error message
         }
 
-        // Hash the password if it is being updated
        
         $param = array(
         ':StudentId' => $this->StudentId,

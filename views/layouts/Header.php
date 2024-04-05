@@ -178,7 +178,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</a>
 								</li>
 								<li>
-									<a href="<?= 'account-settings.php' ?>">
+									<a href="<?= 'students-copy.php' ?>">
 										<i class="bi bi-file-person-fill"></i>
 										<span class="menu-text">Account</span>
 									</a>
@@ -202,7 +202,25 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 										<i class="bi bi-people-fill"></i>
 										<span class="menu-text">Students</span>
 									</a>
-								</li>	
+								</li>
+								
+								<li class="sidebar-dropdown">
+									<a href="#">
+										<i class="bi bi-globe"></i>
+										<span class="menu-text">Categories</span>
+									</a>
+									<div class="sidebar-submenu">
+										<ul>
+											<li>
+												<a href='<?="addcategory.php"?>'>Add Category</a>
+											</li>
+											<li>
+												<a href='<?="categories.php"?>'>Manage Categories</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+										
 								<li>
 									<a href="<?='forgot-password-login.php'?>">
 										<i class="bi bi-emoji-expressionless"></i>

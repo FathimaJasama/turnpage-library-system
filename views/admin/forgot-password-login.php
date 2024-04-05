@@ -92,12 +92,12 @@ if(isset($_POST['submit'])) {
 						</h5>
 						<div class="mb-3">
 							<label class="form-label">Your Email</label>
-							<input type="text" class="form-control" name=email placeholder="Enter your email" />
+							<input type="text" class="form-control" id=email name=email placeholder="Enter your email" />
 						</div>
 						</div>
                         <div class="mb-3">
                         <label class="form-label">New Password</label>
-                        <input type="password" class="form-control" name="newpassword" placeholder="Enter new password" required />
+                        <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="Enter new password" required />
                         </div>
 						<?php if(!empty($message)): ?>
                         <div class="alert alert-primary fade show" <?php echo ($message === "Your password has been successfully changed.") ? "green" : "red"; ?> role="alert">

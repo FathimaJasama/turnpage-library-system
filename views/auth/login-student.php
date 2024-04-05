@@ -3,8 +3,12 @@
 require_once('./../../config.php');
 include __DIR__ . '/../../helpers/AppManager.php';
 
+
 $sm = AppManager::getSM();
 $error = $sm->getAttribute("error");
+$student_id = $sm->getAttribute("studentId");
+
+
 
 ?>
 
@@ -78,7 +82,7 @@ $error = $sm->getAttribute("error");
 							<a href="<?=asset("views/admin/forgot-password-login.php")?>" class="text-blue text-decoration-underline">Lost password?</a>
 						</div>
 						<div class="d-grid py-3">
-							<button type="submit" class="btn btn-lg btn-primary">
+							<button type="submit" class="btn btn-lg btn-primary edit-student" data-id="<?= $student_id ?>">
 								Login
 							</button>
 						</div>
