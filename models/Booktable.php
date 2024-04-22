@@ -60,14 +60,14 @@ class Book extends BaseModel
         return $this->pm->run(
             "UPDATE " . $this->getTableName() . "
             SET 
-                'StudentId' = :StudentId,
-                'BookName' = :BookName,
-                'AuthorName' = :AuthorName,
-                'ISBNNumber' = :ISBNNumber,
-                'BookPrice' = :BookPrice,
-                'BookImage' = :BookImage,
-                'isIssued' = :isIssued,
-                'category' = :category 
+                StudentId = :StudentId,
+                BookName = :BookName,
+                AuthorName = :AuthorName,
+                ISBNNumber = :ISBNNumber,
+                BookPrice = :BookPrice,
+                BookImage = :BookImage,
+                isIssued = :isIssued,
+                category = :category 
             WHERE id = :id",
             $param
         );
@@ -124,7 +124,7 @@ class Book extends BaseModel
         $bookModel = new Book();
 
         // Check if Book Name or ISBN Number already exists
-        $existingBook = $bookModel->getBookByBookNameOrISBNumberWithId($BookName, $ISBNNumber, $id);
+        $existingBook = $bookModel->getBookByBookNameOrISBNNumberWithId($BookName, $ISBNNumber, $id);
         if ($existingBook) {
             // Handle the error (return an appropriate message or throw an exception)
             return false; // Or throw an exception with a specific error message

@@ -54,9 +54,9 @@ include("../layouts/Header.php");
 												<ul class="nav nav-tabs" id="customTab2" role="tablist">
 													<li class="nav-item" role="presentation">
 														<a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#oneA" role="tab"
-															aria-controls="oneA" aria-selected="true">My Profile</a>
-													
-													
+															aria-controls="oneA" aria-selected="true">My Profile
+														</a>
+												
 												</ul>
 												<div class="tab-content h-350">
 													<div class="tab-pane fade show active" id="oneA" role="tabpanel">
@@ -135,14 +135,13 @@ include("../layouts/Header.php");
 									</div>
 								</div>
 							</div>
-					
 							<!-- Row end -->
 						</div>
 					</div>
 					<!-- Content wrapper end -->
 
 				
-												
+
 										
 				
 <?php

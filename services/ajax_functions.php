@@ -1,11 +1,13 @@
 <?php
 require_once '../config.php';
 require_once '../helpers/AppManager.php';
-require_once '../models/Treatment.php';
 require_once '../models/Booktable.php';
 require_once '../models/Student.php';
-require_once '../models/User.php';
 require_once '../models/category.php';
+require_once '../models/Author.php';
+require_once '../models/Message.php';
+
+
 
 // Define target directory
 $target_dir = "../assets/uploads/";
@@ -134,6 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 exit;
 }
 
+
 //Delete by student id
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['student_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_student') {
 
@@ -200,6 +203,98 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
+//Get book by id
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['book_id']) && isset($_GET['action']) &&  $_GET['action'] == 'get_book') {
+
+    try {
+        $book_id = $_GET['book_id'];
+        $bookModel = new Book();
+        $book = $bookModel->getById($book_id);
+        if ($book) {
+            echo json_encode(['success' => true, 'message' => "Book created successfully!", 'data' => $book]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to create student. May be student already exist!']);
+        }
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}
+
+//update book
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_book') {
+    try {
+        $StudentId = $_POST['StudentId'];
+        $BookName = $_POST['BookName'];
+        $AuthorName = $_POST['AuthorName'];
+        $ISBNNumber = $_POST['ISBNNumber'];
+        $BookPrice = $_POST['BookPrice'];
+        $BookImage = $_FILES['bookImage'];
+        $category = $_POST['category'];
+        $isIssued = $_POST['isIssued'] == 1 ? 1 : 0;
+        $id = $_POST['id'];
+
+        // Validate inputs
+        if (empty($StudentId) || empty($BookName) || empty($AuthorName) || empty($ISBNNumber) || empty($BookPrice) || empty($category)  ) {
+            echo json_encode(['success' => false, 'message' => 'Required fields are missing!']);
+            exit;
+        }
+
+           // Check if file was uploaded without errors
+           if ($BookImage['error'] === 0) {
+            // Specify directory where you want to store uploaded files
+            $uploadDir = 'uploads/';
+            
+            // Generate a unique name for the uploaded file
+            $fileName = uniqid() . '_' . $BookImage['name'];
+            
+            // Move the uploaded file to the specified directory
+            $uploadPath = $uploadDir . $fileName;
+            if (move_uploaded_file($BookImage['tmp_name'], $uploadPath)) {
+                // Create an instance of the Student model
+            $bookModel = new Book();
+
+            // Call the createStudent method with correct parameters
+            $updated =  $bookModel->updateBook($id, $StudentId,$BookName,$AuthorName, $ISBNNumber, $BookPrice, $fileName, $category, $isIssued);
+                
+            if ($updated) {
+                echo json_encode(['success' => true, 'message' => "Book updated successfully!"]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to update book. Maybe book already exists!']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file.']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'File upload error: ' . $BookImage['error']]);
+    }
+} catch (PDOException $e) {
+    // Handle database connection errors
+    echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+}
+exit;
+}
+
+//Delete by book id
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['book_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_book') {
+
+    try {
+        $book_id = $_GET['book_id'];
+        $bookModel = new Book();
+        $deleted = $bookModel->deleteBook($book_id);
+
+        if ($deleted) {
+            echo json_encode(['success' => true, 'message' => "Book deleted successfully!", 'data' => $deleted]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete book.']);
+        }
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}
 
 
 //create category
@@ -227,7 +322,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
     exit;
 }
-
 
 
 
@@ -262,17 +356,17 @@ exit;
 }
 
 //Delete by category id
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['student_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_student') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['category_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_category') {
 
     try {
         $category_id = $_GET['category_id'];
         $categoryModel = new Category();
-        $deleted = $studentModel->deleteCategory($category_id);
+        $deleted = $categoryModel->deleteCategory($category_id);
 
         if ($deleted) {
-            echo json_encode(['success' => true, 'message' => "Student deleted successfully!", 'data' => $deleted]);
+            echo json_encode(['success' => true, 'message' => "Category deleted successfully!", 'data' => $deleted]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to delete student.']);
+            echo json_encode(['success' => false, 'message' => 'Failed to delete category.']);
         }
     } catch (PDOException $e) {
         // Handle database connection errors
@@ -281,3 +375,124 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['student_id']) && isset($
     exit;
 }
 
+//create author
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_author') {
+    try {
+        $AuthorName = $_POST['AuthorName'];
+      
+      
+                // Create an instance of the Book model
+                $authorModel = new Author();
+                
+                // Call the createStudent method with correct parameters
+                $created =  $authorModel->createAuthor($AuthorName);
+                
+                if ($created) {
+                    echo json_encode(['success' => true, 'message' => "Author created successfully!"]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Failed to create author. Maybe author already exists!']);
+                }
+            
+       
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}
+
+//Get author by id
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['author_id']) && isset($_GET['action']) &&  $_GET['action'] == 'get_author') {
+
+    try {
+        $author_id = $_GET['author_id'];
+        $authorModel = new Author();
+        $author = $authorModel->getById($author_id);
+        if ($author) {
+            echo json_encode(['success' => true, 'message' => "Author created successfully!", 'data' => $author]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to create author. May be author already exist!']);
+        }
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}
+
+//update author
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_author') {
+    try {
+        $AuthorName = $_POST['AuthorName'];
+        $id = $_POST['id'];
+
+        // Validate inputs
+        if (empty($AuthorName)) {
+            echo json_encode(['success' => false, 'message' => 'Required fields are missing!']);
+            exit;
+        }
+
+            $authorModel = new Author();
+
+            // Call the create Author method with correct parameters
+            $updated =  $authorModel->updateAuthor($id, $AuthorName);
+                
+            if ($updated) {
+                echo json_encode(['success' => true, 'message' => "Author updated successfully!"]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to update author. Maybe author already exists!']);
+            }
+        } catch (PDOException $e) {
+    // Handle database connection errors
+    echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+}
+exit;
+}
+
+//Delete by author id
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['author_id']) && isset($_GET['action']) &&  $_GET['action'] == 'delete_author') {
+
+    try {
+        $author_id = $_GET['author_id'];
+        $authorModel = new Author();
+        $deleted = $authorModel->deleteAuthor($author_id);
+
+        if ($deleted) {
+            echo json_encode(['success' => true, 'message' => "Author deleted successfully!", 'data' => $deleted]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete author.']);
+        }
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}
+
+//create message
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_message') {
+    try {
+        $Name = $_POST['Name'];
+        $EmailId=$_POST['EmailId'];
+        $Message=$_POST['Message'];
+
+      
+                // Create an instance of the Book model
+                $messageModel = new Message();
+                
+                // Call the createStudent method with correct parameters
+                $created =  $messageModel->createMessage($Name, $EmailId, $Message);
+                
+                if ($created) {
+                    echo json_encode(['success' => true, 'message' => "Message has been sent successfully!"]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Failed to send message. There is error in server']);
+                }
+            
+       
+    } catch (PDOException $e) {
+        // Handle database connection errors
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    exit;
+}

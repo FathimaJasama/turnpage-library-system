@@ -33,10 +33,10 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 		<meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
 		<meta property="og:type" content="Website">
 		<meta property="og:site_name" content="Bootstrap Gallery">
-		<link rel="shortcut icon" href="<?=asset("assets/images/favicon.svg")?>" />
+		<link rel="shortcut icon" href="<?=asset("assets/images/openbook4.png")?>" />
 
 		<!-- Title -->
-		<title>Library Management System</title>
+		<title>TurnPage Library System</title>
 
 		<!-- *************
 			************ Common Css Files *************
@@ -66,6 +66,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 		<!-- Login css -->
 		<link rel="stylesheet" href="<?=asset("assets/css/login.css")?>" />
 	</head>
+	<stty>
 
 	<body>
 
@@ -80,7 +81,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 					<a href="" class="logo">
 						<img src="<?=asset("assets/images/openbook3.PNG")?>" class="d-none d-md-block me-4" alt="Sapphire Admin Dashboard" />
 						<div class="page-title d-none d-md-block">
-							<h4 class="m-0">Library Management System</h4>
+							<h4 class="m-0">TurnPage Library System</h4>
 						</div>
 						<img src="<?=asset("assets/images/logo-sm.svg")?>" class="d-block d-md-none me-4" alt="Sapphire Admin Dashboard" />
 					</a>
@@ -138,7 +139,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 					<div class="header-profile d-flex align-items-center">
 						<div class="dropdown">
 							<a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
-								<span class="user-name d-none d-md-block">Michelle White</span>
+								<span class="user-name d-none d-md-block"><?= $FullName?></span>
 								<span class="avatar">
 									<img src="<?=asset("services/uploads/66053b74106dd_jesala.jpg")?>" alt="Admin Templates" />
 									<span class="status online"></span>
@@ -183,11 +184,37 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 										<span class="menu-text">Account</span>
 									</a>
 								</li>
-								<li>
-									<a href="<?= 'booktables-oop.php' ?>">
+								<li class="sidebar-dropdown">
+									<a href="#">
 										<i class="bi bi-journals"></i>
-										<span class="menu-text">Book Details</span>
+										<span class="menu-text">Books</span>
 									</a>
+									<div class="sidebar-submenu">
+										<ul>
+											<li>
+												<a href='<?="addbooks.php"?>'>Add Books</a>
+											</li>
+											<li>
+												<a href='<?="booktables-oop.php"?>'>Manage Books</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li class="sidebar-dropdown">
+									<a href="#">
+										<i class="bi bi-person-workspace"></i>
+										<span class="menu-text">Author</span>
+									</a>
+									<div class="sidebar-submenu">
+										<ul>
+											<li>
+												<a href='<?="addauthors.php"?>'>Add Authors</a>
+											</li>
+											<li>
+												<a href='<?="ManageAuthor.php"?>'>Manage Authors</a>
+											</li>
+										</ul>
+									</div>
 								</li>
 								<li>
 									<a href=<?= 'books1.php'?>>
@@ -196,14 +223,6 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</a>
 									
 								</li>
-								
-								<li>
-								<a href="<?= 'students.php' ?>">
-										<i class="bi bi-people-fill"></i>
-										<span class="menu-text">Students</span>
-									</a>
-								</li>
-								
 								<li class="sidebar-dropdown">
 									<a href="#">
 										<i class="bi bi-globe"></i>
@@ -220,11 +239,28 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 										</ul>
 									</div>
 								</li>
-										
+								<li>
+								<a href="<?= 'students.php' ?>">
+										<i class="bi bi-people-fill"></i>
+										<span class="menu-text">Students</span>
+									</a>
+								</li>
 								<li>
 									<a href="<?='forgot-password-login.php'?>">
 										<i class="bi bi-emoji-expressionless"></i>
 										<span class="menu-text">Change Password</span>
+									</a>
+								</li>
+								<li>
+								<a href="<?= 'support.php' ?>">
+										<i class="bi bi-code-square"></i>
+										<span class="menu-text">Support</span>
+									</a>
+								</li>
+								<li>
+								<a href="<?= 'messages.php' ?>">
+										<i class="bi bi-envelope"></i>
+										<span class="menu-text">Messages</span>
 									</a>
 								</li>
 							</ul>		

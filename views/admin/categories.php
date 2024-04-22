@@ -32,9 +32,11 @@ $categories = $categoryModel->getAll();
                 
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                <button type="button" class="btn btn-primary float-end m-3" data-bs-toggle="modal" data-bs-target="#createStudentModal">
-            Create User
-        </button>
+                    <div class="d-flex align-items-center m-3">
+                    <i class="bi bi-search"></i>
+                        <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search" aria-label="Search..." />
+                    </div>
+                </div>
                  <table class="table table-striped">
                         <thead>
                             <tr>
@@ -89,40 +91,7 @@ $categories = $categoryModel->getAll();
     </section>
 </div>
 
-<!-- Modal -->
-<div class="modal fade " id="createCategoryModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form id="create-category-form" action="<?= url('services/ajax_functions.php') ?>" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="create_category">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Create Student</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
 
-                <div class="modal-body">
-                <div class="row">
-                        <div class="col mb-3">
-                            <label for="Category" class="form-label">Category</label>
-                            <input type="text" id="Category" name="Category" class="form-control" placeholder="Enter Category" required />
-                        </div>
-                    </div>
-                    </div>
-                    <div id="additional-fields"></div>
-                    <div class="mb-3 mt-3">
-                        <div id="alert-container"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" id="create-now" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <!-- Update Student Modal -->
 
@@ -177,6 +146,7 @@ require_once('../layouts/Footer.php');
 ?>
 
 <script>
+
 $(document).ready(function() {
 
 // Handle modal button click
@@ -220,6 +190,7 @@ $('#create-now').on('click', function() {
         var message = ('Form is not valid. Please check your inputs.');
         showAlert(message, 'red');
     }
+    
 });
 
 $('.edit-category').on('click', async function() {
@@ -227,13 +198,15 @@ $('.edit-category').on('click', async function() {
     await getCategoryById(category_id);
 })
 
-$('.delete-student').on('click', async function() {
+$('.delete-category').on('click', async function() {
             var category_id = $(this).data('id');
             var is_confirm = confirm('Are you sure,Do you want to delete?');
             if (is_confirm) await deleteById(category_id);
         })
 
-// update student form
+
+        
+// update category form
 // handle update modal button click
 $('#update-now').on('click', function() {
     // Get the form element
@@ -278,6 +251,16 @@ $('#update-now').on('click', function() {
     }
 });
 
+// To create search bar
+$("#searchInput").on("input", function() {
+            var searchTerm = $(this).val().toLowerCase();
+
+            // Loop through each row in the table body
+            $("tbody tr").filter(function() {
+                // Toggle the visibility based on the search term
+                $(this).toggle($(this).text().toLowerCase().indexOf(searchTerm) > -1);
+            });
+        });     
 
 async function getStudentById(id) {
     var formAction = $('#update-student-form').attr('action');
@@ -332,8 +315,8 @@ async function deleteById(id) {
             url: formAction,
             type: 'GET',
             data: {
-                student_id: id,
-                action: 'delete_student'
+                category_id: id,
+                action: 'delete_category'
             }, // Form data
             dataType: 'json',
             success: function(response) {

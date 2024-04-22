@@ -2,7 +2,7 @@
 require_once('../layouts/Header.php');
 require_once __DIR__ . '/../../models/Student.php';
 
-$studentModel = new Student();
+$authorModel = new Author();
 $students = $studentModel->getAll();
 
 ?>

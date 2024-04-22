@@ -11,7 +11,7 @@ include("../layouts/Header.php");
 				<h5>Hi <?= $FullName ?></h5>
 			</div>
 			<div class="page-icon">
-			<i class="bi bi-exclamation-lg"></i>
+				<i class="bi bi-exclamation-lg"></i>
 			</div>
 		</div>
 	</div>
@@ -19,13 +19,15 @@ include("../layouts/Header.php");
 
 	<!-- Content wrapper start -->
 	<div class="content-wrapper">
-		<div class="subscribe-header">
-		<img src="<?=asset("assets/images/librarybg3.jpg")?>" class="img-fluid w-100"  alt="Header" style="width: 250px; height: 550px;"/>
+        <div class="subscribe-header position-relative">
+            <img src="<?= asset("assets/images/TurnPageLibrarySystem(1).png") ?>" class="img-fluid w-100" alt="Header" />
+            <a href="#" class="btn btn-primary btn-rounded position-absolute" style="top: 80%; left: 20%; transform: translate(-50%, -50%);">Get Started</a>
 		</div>
-	</div>
-	<!-- Content wrapper end -->
+		<img src="<?= asset("assets/images/aboutthesystem.png") ?>" class="img-fluid w-100" alt="Header" />
+    </div>
+    <!-- Content wrapper end -->
 
 
-<?php
-require_once('../layouts/Footer.php');
-?>
+	<?php
+	require_once('../layouts/Footer.php');
+	?>

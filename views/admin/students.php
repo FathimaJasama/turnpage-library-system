@@ -5,6 +5,8 @@ require_once __DIR__ . '/../../models/Student.php';
 $studentModel = new Student();
 $students = $studentModel->getAll();
 
+
+
 ?>
 <div class="content-wrapper-scroll">
 
@@ -32,9 +34,14 @@ $students = $studentModel->getAll();
                 
                 <!-- /.card-header -->
                 <div class="card-body p-0">
+                <div class="d-flex align-items-center m-3">
+                    <i class="bi bi-search"></i>
+                        <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search" aria-label="Search..." />
+                  
                 <button type="button" class="btn btn-primary float-end m-3" data-bs-toggle="modal" data-bs-target="#createStudentModal">
-            Create User
-        </button>
+            Create
+                </button>
+                </div>
                  <table class="table table-striped">
                         <thead>
                             <tr>
@@ -438,6 +445,19 @@ async function deleteById(id) {
         });
     }
 
-    
+// To create search bar
+
+
+    $("#searchInput").on("input", function() {
+    var searchTerm = $(this).val().toLowerCase();
+
+    // Loop through each row in the table body
+    $("tbody tr").filter(function() {
+        // Toggle the visibility based on the search term
+        $(this).toggle($(this).text().toLowerCase().indexOf(searchTerm) > -1);
+    });
+});
+
+
 
 </script>

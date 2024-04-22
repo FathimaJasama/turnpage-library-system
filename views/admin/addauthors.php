@@ -1,20 +1,21 @@
 <?php
 require_once('../layouts/Header.php');
-require_once __DIR__ . '/../../models/Category.php';
+require_once __DIR__ . '/../../models/Author.php';
 
 $sm = AppManager::getSM();
 $error = $sm->getAttribute("error");
 
-$categoryModel = new Category();
-$categories = $categoryModel->getAll();
+$authorModel = new Author();
+$authors = $authorModel->getAll();
+
+
 
 $currentUrl = $_SERVER['SCRIPT_NAME'];
 
 // Extract the last filename from the URL
 $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 ?>
-    
-<div class="content-wrapper-scroll">
+    <div class="content-wrapper-scroll">
 
 <!-- Main header starts -->
 <div class="main-header d-flex align-items-center justify-content-between position-relative">
@@ -23,7 +24,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
             <i class="bi bi-file-person-fill"></i>
         </div>
         <div class="page-title d-none d-md-block">
-            <h5>Add Category</h5>
+            <h5>Add Author</h5>
         </div>
     </div>
 
@@ -34,36 +35,36 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
    
     <section class="content m-3">
         
-<div class="row gx-3">
+    <div class="row gx-3">
 <div class="col-xxl-12">
 <div class="card">
 	<div class="card-header">
 		<div class="card-title"></div>
-            <form id="create-category-form" action="<?= url('services/ajax_functions.php') ?>" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="create_category">
+            <form id="create-author-form" action="<?= url('services/ajax_functions.php') ?>" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="create_author">
                 <div class="row gx-3">
 					<div class="col-xxl-12">
 						<div class="form-section-title p-3 mt-4 mb-3 fw-bold">
-                        Category Information						
+                        Author Information						
                         </div>
 					</div>
                 
 
                     <div class="col-xxl-4 col-lg-4 col-sm-4 col-12">
 						<div class="mb-3">
-                            <label for="CategoryName" class="form-label">Add Category</label>
-                            <input type="text" id="CategoryName" name="CategoryName" class="form-control" placeholder="Enter Category" required />
+                            <label for="AuthorName" class="form-label">Add Author</label>
+                            <input type="text" id="AuthorName" name="AuthorName" class="form-control" placeholder="Enter Author" required />
                         </div>
                     </div>
 					<div class="mb-3">
 					<label class="form-label">Status</label>
 					<div>
 						<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"  checked="" />
+						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked="" />
 						<label class="form-check-label" for="inlineRadio1">Active</label>
 						</div>
 						<div class="form-check form-check-inline">
-					    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
+					    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"  />
 						<label class="form-check-label" for="inlineRadio2">Inactive</label>
 						</div>
 					</div>
@@ -96,7 +97,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                         </div>
                     </div>
                 </div>
-              </div>
+                                </div>
 
             </form>
         </div>
@@ -112,17 +113,17 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
     $(document).ready(function() {
         $('#create-now').on('click', function() {
             // Get the form element
-            var form = $('#create-category-form')[0];
-            $('#create-category-form')[0].reportValidity();
+            var form = $('#create-author-form')[0];
+            $('#create-author-form')[0].reportValidity();
 
             // Check form validity
             if (form.checkValidity()) {
                 // Create a FormData object
-                var formData = new FormData($('#create-category-form')[0]);
+                var formData = new FormData($('#create-author-form')[0]);
 
                 // Perform AJAX request
                 $.ajax({
-                    url: $('#create-category-form').attr('action'),
+                    url: $('#create-author-form').attr('action'),
                     type: 'POST',
                     data: formData,
                     contentType: false, // Don't set content type
@@ -131,7 +132,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                     success: function(response) {
                         showAlert(response.message, response.success ? 'success' : 'red');
                         if (response.success) {
-                            $('#createCategoryModal').modal('hide');
+                            $('#createAuthorModal').modal('hide');
                             setTimeout(function() {
                                 location.reload();
                             }, 1000);

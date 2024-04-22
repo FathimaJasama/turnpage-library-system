@@ -32,9 +32,11 @@ $books = $bookModel->getAll();
                 
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                <button type="button" class="btn btn-primary float-end m-3" data-bs-toggle="modal" data-bs-target="#createBookModal">
-            Add Books
-        </button>
+                    <div class="d-flex align-items-center m-3">
+                    <i class="bi bi-search"></i>
+                        <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search" aria-label="Search..." />
+                    </div>
+                </div>
                  <table class="table table-striped">
                         <thead>
                             <tr>
@@ -45,7 +47,7 @@ $books = $bookModel->getAll();
                                 <th class="">ISBNNumber</th>
                                 <th class="">BookPrice</th>
                                 <th class="">BookImage</th>
-                                <th class="">Status</th>
+                                <th class="">isIssued</th>
                                 <th class="">category</th>
                                 <!-- <th class="">Reg.Date</th> -->
                                 <!-- <th class="">Updated Date</th> -->
@@ -80,8 +82,8 @@ $books = $bookModel->getAll();
                                     
                                     <td>
                                         <div>
-                                            <button class="btn btn-sm btn-info m-2 edit-student" data-id="<?= $c['id']; ?>">Edit</button>
-                                            <button class="btn btn-sm btn-danger m-2 delete-student" data-id="<?= $c['id']; ?>">Delete</button>
+                                            <button class="btn btn-sm btn-info m-2 edit-book" data-id="<?= $c['id']; ?>">Edit</button>
+                                            <button class="btn btn-sm btn-danger m-2 delete-book" data-id="<?= $c['id']; ?>">Delete</button>
 
                                         </div>
                                     </td>
@@ -98,133 +100,75 @@ $books = $bookModel->getAll();
     </section>
 </div>
 
-<!-- Modal -->
-<div class="modal fade " id="createBookModal" tabindex="-1" aria-hidden="true">
+
+
+<!-- Update User Modal -->
+<div class="modal fade " id="editBookModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="create-book-form" action="<?= url('services/ajax_functions.php') ?>" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="create_book">
+            <form id="update-book-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="update_book">
+                <input type="hidden" name="id" id="book_id">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Create Books</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Edit Book Deatails</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <div class="modal-body">
-                <div class="row">
+                    <div class="row">
                         <div class="col mb-3">
                             <label for="StudentId" class="form-label">Student ID</label>
-                            <input type="text" id="StudentId" name="StudentId" class="form-control" placeholder="Book Name" required />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="BookName" class="form-label">Book Name</label>
-                            <input type="text" id="BookName" name="BookName" class="form-control" placeholder="Book Name" required />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="AuthorName" class="form-label">Author Name</label>
-                            <input type="text" id="AuthorName" name="AuthorName" class="form-control" placeholder="Enter Author's Name" required />
+                            <input type="text" id="StudentId" name="StudentId" class="form-control" placeholder="Enter Student Id" required />
                         </div>
                     </div>
                     <div class="row g-1">
                         <div class="col mb-0">
-                            <label for="ISBNNumber" class="form-label">ISBNNumber</label>
+                            <label for="BookName" class="form-label">Book Name</label>
+                            <input type="text" id="BookName" name="BookName" class="form-control" placeholder="Enter Book Name" required />
+                        </div>
+                    </div>
+                    <div class="row g-1">
+                        <div class="col mb-0">
+                            <label for="AuthorName" class="form-label">Author Name</label>
+                            <input type="text" id="AuthorName" name="AuthorName" class="form-control" placeholder="Enter Author Name" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="ISBNNumber" class="form-label">ISBN Number</label>
                             <input type="number" id="ISBNNumber" name="ISBNNumber" class="form-control" placeholder="1234567890" required />
                         </div>
                     </div>
                     <div class="row g-1">
                         <div class="col mb-0">
                             <label for="BookPrice" class="form-label">Book Price</label>
-                            <input type="text" id="BookPrice" name="BookPrice" class="form-control" placeholder="USD" required />
+                            <input type="number" id="BookPrice" name="BookPrice" class="form-control" placeholder="Enter Book Price" required />
                         </div>
                     </div>
                     <div class="col-12 mb-3">
                     <label for="bookImage" class="form-label">Book Image</label>
-                    <input class="form-control" name="bookImage" id="bookImage" type="file" accept="image/*">
+                    <input class="form-control" name="bookImage" id="editbookImage" type="file" accept="image/*">
                     </div>
                     <div class="row g-1">
                         <div class="col mb-0">
                             <label for="category" class="form-label">Category</label>
-                            <input type="text" id="category" name="category" class="form-control" placeholder="Category Name" required />
-                        </div>
-                    </div>
-                    <div id="additional-fields"></div>
-                    <div class="mb-3 mt-3">
-                        <div id="alert-container"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" id="create-now" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Update User Modal -->
-<div class="modal fade " id="editUserModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form id="update-user-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="update_user">
-                <input type="hidden" name="id" id="user_id">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Edit User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="username" class="form-label">User Name</label>
-                            <input type="text" id="username" name="username" class="form-control" placeholder="Enter Name" required />
-                        </div>
-                    </div>
-                    <div class="row g-1">
-                        <div class="col mb-0">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="xxxx@xxx.xx" required />
-                        </div>
-
-                    </div>
-                    <div class="row g-2 mt-2">
-                        <div class="col mb-0 form-password-toggle">
-                            <label class="form-label" for="password">Password</label>
                             <div class="input-group">
-                                <input type="password" name="password" class="form-control" id="password" placeholder="············" aria-describedby="basic-default-password2" required>
-                                <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                        </div>
-                        <div class="col mb-0 form-password-toggle">
-                            <label class="form-label" for="basic-default-password12">Confirm Password</label>
-                            <div class="input-group">
-                                <input type="password" name="confirm_password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2" required>
-                                <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col mb-0">
-                            <label class="form-label" for="permission">Permission</label>
-                            <div class="input-group">
-                                <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                                <select class="form-select" id="edit_permission" name="permission" required>
+                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                                <select class="form-select" id="edit_category" name="category" required>
                                     <option selected="" value="">Choose...</option>
-                                    <option value="operator">Operator</option>
-                                    <option value="doctor">Doctor</option>
+                                    <option value="5">Technology</option>
+                                    <option value="4">Science</option>
+                                    <option value="3">Romantic</option>
+                                    <option value="2">Programming</option>
+                                    <option value="1">Management</option>
+                                    <option value="0">General</option>
                                 </select>
                             </div>
-                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col mb-0">
-                            <label class="form-label" for="is_active">Status</label>
+                            <label class="form-label" for="isIssued">isIssued</label>
                             <div class="input-group">
-                                <select class="form-select" id="is_active" name="is_active" required>
+                                <select class="form-select" id="isIssued" name="isIssued" required>
                                     <option selected="" value="">Choose...</option>
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
@@ -253,52 +197,155 @@ require_once('../layouts/Footer.php');
 ?>
 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
 
+$('.edit-book').on('click', async function() {
+    var book_id = $(this).data('id');
+    await getBookById(book_id);
+});
 
-        $('#create-now').on('click', function() {
-            // Get the form element
-            var form = $('#create-book-form')[0];
-            $('#create-book-form')[0].reportValidity();
+$('.delete-book').on('click', async function() {
+            var book_id = $(this).data('id');
+            var is_confirm = confirm('Are you sure,Do you want to delete?');
+            if (is_confirm) await deleteById(book_id);
+        })
 
-            // Check form validity
-            if (form.checkValidity()) {
-                // Create a FormData object
-                var formData = new FormData($('#create-book-form')[0]);
+// update student form
+// handle update modal button click
+$('#update-now').on('click', function() {
+    // Get the form element
+    var form = $('#update-book-form')[0];
+    $('#update-book-form')[0].reportValidity();
 
-                // Perform AJAX request
-                $.ajax({
-                    url: $('#create-book-form').attr('action'),
-                    type: 'POST',
-                    data: formData,
-                    contentType: false, // Don't set content type
-                    processData: false, // Don't process the data
-                    dataType: 'json',
-                    success: function(response) {
-                        showAlert(response.message, response.success ? 'green' : 'red');
-                        if (response.success) {
-                            $('#createBookModal').modal('hide');
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000);
-                        }
-                    },
-                    error: function(error) {
-                        // Handle the error
-                        console.error('Error submitting the form:', error);
-                    },
-                    complete: function(response) {
-                        // This will be executed regardless of success or error
-                        console.log('Request complete:', response);
-                    }
-                });
-            } else {
-                var message = ('Form is not valid. Please check your inputs.');
-                showAlert(message, 'danger');
+    // Check form validity
+    if (form.checkValidity()) {
+        // Serialize the form data
+        var formAction = $('#update-book-form').attr('action');
+        var formData = new FormData($('#update-book-form')[0]);
+
+        // Perform AJAX request
+        $.ajax({
+            url: formAction,
+            type: 'POST',
+            data: formData, // Form data
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                showAlert(response.message, response.success ? 'success' : 'red', 'alert-container-update-form');
+                if (response.success) {
+                    $('#editBookModal').modal('hide');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }
+            },
+            error: function(error) {
+                // Handle the error
+                console.error('Error submitting the form:', error);
+            },
+            complete: function(response) {
+                // This will be executed regardless of success or error
+                console.log('Request complete:', response);
             }
         });
+    } else {
+        var message = 'Form is not valid. Please check your inputs.';
+        showAlert(message, 'red');
+    }
+});
 
-        
+async function getBookById(id) {
+    var formAction = $('#update-book-form').attr('action');    
+
+    $.ajax({
+        url: formAction,
+        type: 'GET',
+        data: {
+            book_id: id,
+            action: 'get_book'
+        }, // Form data
+        dataType: 'json',
+        success: function(response) {
+            showAlert(response.message, response.success ? 'primary' : 'danger');
+            if (response.success) {
+                var book_id = response.data.id;
+                var StudentId = response.data.StudentId;
+                var BookName = response.data.BookName;
+                var AuthorName = response.data.AuthorName;
+                var ISBNNumber = response.data.ISBNNumber;
+                var BookPrice = response.data.BookPrice;
+                var BookImage = response.data.BookImage;
+                var isIssued = response.data.isIssued;
+                var category = response.data.category;
+
+                $('#editBookModal #book_id').val(book_id);
+                $('#editBookModal #StudentId').val(StudentId);
+                $('#editBookModal #BookName').val(BookName);
+                $('#editBookModal #AuthorName').val(AuthorName);
+                $('#editBookModal #ISBNNumber').val(ISBNNumber);
+                $('#editBookModal #BookPrice').val(BookPrice);
+                $('#editBookModal #BookImage').val(BookImage);
+                $('#editBookModal #isIssued option[value="' + isIssued + '"]').prop('selected', true);
+                $('#editBookModal #category').val(category) ;
+                $('#editBookModal').modal('show');
+            }
+        },
+        error: function(error) {
+            // Handle the error
+            console.error('Error submitting the form:', error);
+        },
+        complete: function(response) {
+            // This will be executed regardless of success or error
+            console.log('Request complete:', response);
+        }
+    });
+}
+
+async function deleteById(id) {
+        var formAction = $('#update-book-form').attr('action');
+
+        // Perform AJAX request
+        $.ajax({
+            url: formAction,
+            type: 'GET',
+            data: {
+                book_id: id,
+                action: 'delete_book'
+            }, // Form data
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }
+            },
+            error: function(error) {
+                // Handle the error
+                console.error('Error submitting the form:', error);
+            },
+            complete: function(response) {
+                // This will be executed regardless of success or error
+                console.log('Request complete:', response);
+            }
         });
-    
+    }
+
+
+// To create search bar
+$("#searchInput").on("input", function() {
+    var searchTerm = $(this).val().toLowerCase();
+
+    // Loop through each row in the table body
+    $("tbody tr").filter(function() {
+        // Toggle the visibility based on the search term
+        $(this).toggle($(this).text().toLowerCase().indexOf(searchTerm) > -1);
+    });
+});
+
+});
+
 </script>
+
+    

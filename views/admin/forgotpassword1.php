@@ -157,6 +157,11 @@ if(isset($_POST['submit'])) {
                         <label class="confirmPassword">Confirm Password</label>
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter new password" required />
                         </div>
+                        <div id="additional-fields"></div>
+                    					<div class="mb-3 mt-3">
+                        					<div id="alert-container">
+											</div>
+                    					</div>
                         <?php if (!empty($error)) : ?>
                     <div class="text-red font-x"><?= ($error ?? "") ?></div>
                     <?php endif; ?>
