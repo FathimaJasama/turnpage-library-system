@@ -16,7 +16,7 @@ $message = ''; // Initialize an empty variable to store alert messages.
 
 if(isset($_POST['submit'])) {
     $email = $_POST['email'];
-    $newpassword = md5($_POST['newpassword']);
+    $newpassword = password_hash($_POST['newpassword'], PASSWORD_DEFAULT);
 
     // Check if the provided email exists in the database
     $sql = "SELECT EmailId FROM students WHERE EmailId = :email";

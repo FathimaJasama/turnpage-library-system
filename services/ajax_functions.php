@@ -116,12 +116,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $studentModel = new Student();
 
             // Call the createStudent method with correct parameters
-            $updated =  $studentModel->updateStudent($id, $StudentId, $fileName, $FullName, $Password, $MobileNumber, $EmailId);
+            $updated =  $studentModel->updateStudent($id, $StudentId, $fileName, $FullName, $Password, $MobileNumber, $EmailId, $Status);
                 
             if ($updated) {
                 echo json_encode(['success' => true, 'message' => "Student updated successfully!"]);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Failed to update student. Maybe student already exists!']);
+                echo json_encode(['success' => false, 'message' => 'Failed to update student.!']);
             }
         } else {
             echo json_encode(['success' => false, 'message' => 'Failed to move uploaded file.']);

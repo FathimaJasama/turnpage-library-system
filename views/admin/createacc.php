@@ -102,7 +102,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                 <div class="modal-body">
                 <div class="row">
                         <div class="col mb-3">
-                            <label for="StudentId" class="form-label">Student Id</label>
+                            <label for="StudentId" class="form-label">NIC Number</label>
                             <input type="text" id="StudentId" name="StudentId" class="form-control" placeholder="Enter Student Id" required />
                         </div>
                     </div>

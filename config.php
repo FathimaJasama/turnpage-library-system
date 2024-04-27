@@ -13,7 +13,7 @@ date_default_timezone_set('Asia/Colombo');
 
 function current_domain()
 {
-    return protocol() . $_SERVER['HTTP_HOST'] . '/librarysql';
+    return protocol() . $_SERVER['HTTP_HOST'] . '/LMS-mine';
     // return protocol() . $_SERVER['HTTP_HOST'];
 }
 

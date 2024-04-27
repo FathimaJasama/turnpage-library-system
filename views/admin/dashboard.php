@@ -21,7 +21,7 @@ include("../layouts/Header.php");
 	<div class="content-wrapper">
         <div class="subscribe-header position-relative">
             <img src="<?= asset("assets/images/TurnPageLibrarySystem(1).png") ?>" class="img-fluid w-100" alt="Header" />
-            <a href="#" class="btn btn-primary btn-rounded position-absolute" style="top: 80%; left: 20%; transform: translate(-50%, -50%);">Get Started</a>
+            <a href="createacc.php" class="btn btn-primary btn-rounded position-absolute" style="top: 80%; left: 20%; transform: translate(-50%, -50%);">Get Started</a>
 		</div>
 		<img src="<?= asset("assets/images/aboutthesystem.png") ?>" class="img-fluid w-100" alt="Header" />
     </div>

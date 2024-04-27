@@ -12,7 +12,7 @@ $categories = $categoryModel->getAll();
 <div class="main-header d-flex align-items-center justify-content-between position-relative">
     <div class="d-flex align-items-center justify-content-center">
         <div class="page-icon">
-            <i class="bi bi-file-person-fill"></i>
+            <i class="bi bi-grid"></i>
         </div>
         <div class="page-title d-none d-md-block">
             <h5>Category</h5>
