@@ -57,9 +57,15 @@ $students = $studentModel->getAll();
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    foreach ($students as $key => $c) {
-                                    ?>
+                                <?php
+									// Find the user's data in the $students array
+									$currentUser = null;
+									foreach ($students as $key => $c) {
+										if ($c['id'] == $student_id) {
+											$currentUser = $c;
+											break;
+										}
+									}?>
                                         <tr>
                                             <td><?= ++$key ?></td>
                                             <td><?= $c['StudentId'] ?? ""; ?></td>
@@ -87,9 +93,7 @@ $students = $studentModel->getAll();
                                                 </div>
                                             </td>
                                         </tr>
-                                    <?php
-                                    }
-                                    ?>
+                                    
                                 </tbody>
                             </table>
                         </div>

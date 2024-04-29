@@ -15,7 +15,7 @@ $books = $bookModel->getAll();
             <i class="bi bi-file-person-fill"></i>
         </div>
         <div class="page-title d-none d-md-block">
-            <h5>Book Table</h5>
+            <h5>Issue Books</h5>
         </div>
     </div>
 

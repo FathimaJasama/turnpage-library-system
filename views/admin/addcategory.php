@@ -71,7 +71,8 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                                     </div>
                                     <div id="additional-fields"></div>
                                     <div class="mb-3 mt-3">
-                                        <div id="alert-container"></div>
+                                        <div id="alert-container">
+                                        </div>
                                     </div>
                             </div>
                             <div class="row gx-3">
