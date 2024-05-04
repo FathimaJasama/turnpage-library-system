@@ -7,7 +7,6 @@ class Author extends BaseModel
     public $AuthorName;
 
 
-
     protected function getTableName()
     {
         return "tblauthors";
@@ -25,7 +24,7 @@ class Author extends BaseModel
 
     protected function updateRec()
     {
-        // Check if the new StudentId or EmailId already exists (excluding the current user's record)
+        // Check if the new AuthorId or EmailId already exists (excluding the current user's record)
         $existingAuthor = $this->getAuthorByAuthorNameWithId($this->AuthorName,$this->id);
         if ($existingAuthor) {
             // Handle the error (return an appropriate message or throw an exception)
@@ -33,7 +32,6 @@ class Author extends BaseModel
         }
 
         
-
         $param = array(
             ':AuthorName' => $this->AuthorName,
             ':id' => $this->id
@@ -56,14 +54,14 @@ class Author extends BaseModel
 
         $result = $this->pm->run($query, $param);
 
-        return $result; // Return the category if found, or false if not found
+        return $result; // Return the author if found, or false if not found
     }
 
     function createAuthor($AuthorName)
     {
         $authorModel = new Author();
 
-        // Check if StudentId or EmailId already exists
+        // Check if Aauthor or EmailId already exists
         $existingAuthor = $authorModel->getAuthorByAuthorName($AuthorName);
         if ($existingAuthor) {
             // Handle the error (return an appropriate message or throw an exception)

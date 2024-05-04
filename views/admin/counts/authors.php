@@ -9,6 +9,7 @@ $conn = new mysqli('localhost', 'root', "", 'library');
 // SQL query to get the count of books
 $sql = "SELECT COUNT(id) AS authors FROM tblauthors";
 
+
 $result = $conn->query($sql);
 
 if ($result) {

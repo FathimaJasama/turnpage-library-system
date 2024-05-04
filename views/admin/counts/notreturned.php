@@ -7,7 +7,7 @@ $conn = new mysqli('localhost', 'root', "", 'library');
 
 
 // SQL query to get the count of books
-$sql = "SELECT COUNT(id) AS returnedbooks FROM tblissuedbookdetails
+$sql = "SELECT COUNT(id) AS returnedbooks FROM tblissuedbookdetail
 WHERE ReturnStatus = 0";
 
 $result = $conn->query($sql);

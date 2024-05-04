@@ -4,7 +4,7 @@ require_once 'BaseModel.php';
 
 class Book extends BaseModel
 {
-    private $StudentId;
+    private $Publisher;
     public $BookName;
     public $AuthorName;
     public $ISBNNumber;
@@ -23,7 +23,7 @@ class Book extends BaseModel
 
         $param = array(
 
-        ':StudentId' => $this->StudentId,
+        ':Publisher' => $this->Publisher,
         ':BookName' => $this->BookName,
         ':AuthorName' => $this->AuthorName,
         ':ISBNNumber' => $this->ISBNNumber,
@@ -33,7 +33,7 @@ class Book extends BaseModel
         ':category' => $this->category     
         );
 
-        return $this->pm->run("INSERT INTO " . $this->getTableName() . "(StudentId,BookName,AuthorName,ISBNNumber,BookPrice,BookImage,isIssued,category) values(:StudentId, :BookName, :AuthorName, :ISBNNumber, :BookPrice, :BookImage, :isIssued, :category)", $param);
+        return $this->pm->run("INSERT INTO " . $this->getTableName() . "(Publisher,BookName,AuthorName,ISBNNumber,BookPrice,BookImage,isIssued,category) values(:Publisher, :BookName, :AuthorName, :ISBNNumber, :BookPrice, :BookImage, :isIssued, :category)", $param);
     }
 
     protected function updateRec()
@@ -47,7 +47,7 @@ class Book extends BaseModel
 
        
         $param = array(
-        ':StudentId' => $this->StudentId,
+        ':Publisher' => $this->Publisher,
         ':BookName' => $this->BookName,
         ':AuthorName' => $this->AuthorName,
         ':ISBNNumber' => $this->ISBNNumber,
@@ -60,7 +60,7 @@ class Book extends BaseModel
         return $this->pm->run(
             "UPDATE " . $this->getTableName() . "
             SET 
-                StudentId = :StudentId,
+                Publisher = :Publisher,
                 BookName = :BookName,
                 AuthorName = :AuthorName,
                 ISBNNumber = :ISBNNumber,
@@ -90,7 +90,7 @@ class Book extends BaseModel
         return $result; // Return the Book if found, or false if not found
     }
 
-    function createBook($StudentId,$BookName,$AuthorName,$ISBNNumber,$BookPrice,$BookImage,$category,$isIssued = 1)
+    function createBook($Publisher,$BookName,$AuthorName,$ISBNNumber,$BookPrice,$BookImage,$category,$isIssued = 0)
     {
         $bookModel = new Book();
 
@@ -102,7 +102,7 @@ class Book extends BaseModel
         }
 
         $book = new Book();
-        $book->StudentId = $StudentId;
+        $book->Publisher = $Publisher;
         $book->BookName = $BookName;
         $book->AuthorName = $AuthorName;
         $book->ISBNNumber = $ISBNNumber;
@@ -119,7 +119,7 @@ class Book extends BaseModel
         }
     }
 
-    function updateBook($id,$StudentId,$BookName,$AuthorName,$ISBNNumber,$BookPrice,$BookImage,$category,$isIssued = 1)
+    function updateBook($id,$Publisher,$BookName,$AuthorName,$ISBNNumber,$BookPrice,$BookImage,$category,$isIssued = 1)
     {
         $bookModel = new Book();
 
@@ -132,7 +132,7 @@ class Book extends BaseModel
 
         $book = new Book();
         $book->id = $id;
-        $book->StudentId = $StudentId;
+        $book->Publisher = $Publisher;
         $book->BookName = $BookName;
         $book->AuthorName = $AuthorName;
         $book->ISBNNumber = $ISBNNumber;

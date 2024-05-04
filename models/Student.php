@@ -12,8 +12,7 @@ class Student extends BaseModel
     private $Password;
     private $Status;
 
-
-
+    
     protected function getTableName()
     {
         return "students";
@@ -53,9 +52,7 @@ class Student extends BaseModel
 
         $param = array(
             ':StudentId' => $this->StudentId,
-            ':Photo' => $this->Photo,
             ':FullName' => $this->FullName,
-            ':Password' => $this->Password,
             ':MobileNumber' => $this->MobileNumber,
             ':EmailId' => $this->EmailId,
             ':Status' => $this->Status,
@@ -65,9 +62,39 @@ class Student extends BaseModel
             "UPDATE " . $this->getTableName() . " 
             SET 
                 StudentId = :StudentId, 
+                FullName = :FullName, 
+                EmailId = :EmailId,
+                MobileNumber = :MobileNumber,
+                Status = :Status
+            WHERE id = :id",
+            $param
+        );
+    }
+
+    protected function updateRecProfile()
+    {
+        // Check if the new StudentId or EmailId already exists (excluding the current user's record)
+        $existingStudent = $this->getStudentByStudentIdOrEmailIdWithId( $this->EmailId, $this->id);
+        if ($existingStudent) {
+            // Handle the error (return an appropriate message or throw an exception)
+            return false; // Or throw an exception with a specific error message
+        }
+
+        $param = array(
+            // ':StudentId' => $this->StudentId,
+            ':Photo' => $this->Photo,
+            ':FullName' => $this->FullName,
+            // ':Password' => $this->Password,
+            ':MobileNumber' => $this->MobileNumber,
+            ':EmailId' => $this->EmailId,
+            ':Status' => $this->Status,
+            ':id' => $this->id
+        );
+        return $this->pm->run(
+            "UPDATE " . $this->getTableName() . " 
+            SET 
                 Photo = :Photo, 
                 FullName = :FullName, 
-                Password = :Password,
                 EmailId = :EmailId,
                 MobileNumber = :MobileNumber,
                 Status = :Status
@@ -121,7 +148,7 @@ class Student extends BaseModel
         }
     }
 
-    function updateStudent($id, $StudentId, $Photo, $FullName, $Password, $MobileNumber, $EmailId, $Status = 1)
+    function updateStudent($id, $StudentId, $FullName, $MobileNumber, $EmailId, $Status = 1)
     {
         $studentModel = new Student();
 
@@ -135,9 +162,7 @@ class Student extends BaseModel
         $student = new Student();
         $student->id = $id;
         $student->StudentId = $StudentId;
-        $student->Photo = $Photo;
         $student->FullName = $FullName;
-        $student->Password = $Password;
         $student->MobileNumber = $MobileNumber;
         $student->EmailId = $EmailId;
         $student->Status = $Status;
@@ -147,6 +172,34 @@ class Student extends BaseModel
             return true; // User udapted successfully
         } else {
             return false; // User update failed (likely due to database error)
+        }
+    }
+
+
+    function updateStudentDetails($id, $Photo, $FullName,  $EmailId, $MobileNumber, $Status = 1)
+    {
+        $studentModel = new Student();
+
+        // Check if StudentId or EmailId already exists
+        $existingStudent = $studentModel->getStudentByStudentIdOrEmailIdWithId( $EmailId, $id);
+        if ($existingStudent) {
+            // Handle the error (return an appropriate message or throw an exception)
+            return false; // Or throw an exception with a specific error message
+        }
+
+        $student = new Student();
+        $student->id = $id;
+        $student->Photo = $Photo;
+        $student->FullName = $FullName;
+        $student->MobileNumber = $MobileNumber;
+        $student->EmailId = $EmailId;
+        $student->Status = $Status;
+        $student->updateRecProfile();
+
+        if ($student) {
+            return true; // Student udapted successfully
+        } else {
+            return false; // Student update failed (likely due to database error)
         }
     }
 
@@ -174,9 +227,9 @@ class Student extends BaseModel
         $student->deleteRec($id);
 
         if ($student) {
-            return true; // User udapted successfully
+            return true; // Student udapted successfully
         } else {
-            return false; // User update failed (likely due to database error)
+            return false; // Student update failed (likely due to database error)
         }
     }
 

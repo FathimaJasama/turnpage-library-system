@@ -34,7 +34,7 @@ $messages = $messageModel->getAll();
                 <div class="card-body p-0">
                     <div class="d-flex align-items-center m-3">
                     <i class="bi bi-search"></i>
-                        <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search Messages" aria-label="Search..." />
+                        <input type="text" id="searchInput1" class="form-control border-0 shadow-none" placeholder="Search Messages" aria-label="Search..." />
                     </div>
                 </div>
                  <table class="table table-striped">
@@ -79,7 +79,7 @@ require_once('../layouts/Footer.php');
 <script>
 
 // To create search bar
-$("#searchInput").on("input", function() {
+$("#searchInput1").on("input", function() {
     var searchTerm = $(this).val().toLowerCase();
 
     // Loop through each row in the table body

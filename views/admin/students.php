@@ -34,7 +34,7 @@ $students = $studentModel->getAll();
                         <div class="card-body p-0">
                             <div class="d-flex align-items-center m-3">
                                 <i class="bi bi-search"></i>
-                                <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search" aria-label="Search..." />
+                                <input type="text" id="searchInput1" class="form-control border-0 shadow-none" placeholder="Search" aria-label="Search..." />
 
                                 <button type="button" class="btn btn-primary float-end m-3" data-bs-toggle="modal" data-bs-target="#createStudentModal">
                                     Create
@@ -74,9 +74,9 @@ $students = $studentModel->getAll();
                                             <td>
                                                 <div class="">
                                                     <?php if ($c['Status'] == 1) { ?>
-                                                        <span class="badge shade-green">Enable</span>
+                                                        <span class="badge shade-green">Active</span>
                                                     <?php } else { ?>
-                                                        <span class="badge bg-danger">Disable</span>
+                                                        <span class="badge shade-red">Inactive</span>
                                                     <?php } ?>
                                                 </div>
                                             </td>
@@ -190,10 +190,6 @@ $students = $studentModel->getAll();
                                     <input type="text" id="StudentId" name="StudentId" class="form-control" placeholder="Enter Name" required />
                                 </div>
                             </div>
-                            <div class="col-12 mb-3">
-                                <label for="Photo" class="form-label">Photo</label>
-                                <input class="form-control" name="Photo" id="editPhoto" type="file" accept="image/*">
-                            </div>
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="FullName" class="form-label">Full Name</label>
@@ -207,27 +203,12 @@ $students = $studentModel->getAll();
                                 </div>
                             </div>
                             <div class="row g-2 mt-2">
-                                <div class="col mb-0 form-password-toggle">
-                                    <label class="form-label" for="Password">Password</label>
-                                    <div class="input-group">
-                                        <input type="password" name="Password" class="form-control" id="Password" placeholder="············" aria-describedby="basic-default-password2" required>
-                                        <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col mb-0 form-password-toggle">
-                                    <label class="form-label" for="basic-default-password12">Confirm Password</label>
-                                    <div class="input-group">
-                                        <input type="password" name="confirm_password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2" required>
-                                        <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                    </div>
-                                </div>
                                 <div class="row g-1">
                                     <div class="col mb-0">
                                         <label for="MobileNumber" class="form-label">Mobile Number</label>
                                         <input type="tel" id="MobileNumber" name="MobileNumber" class="form-control" placeholder="123-456-7890" required />
                                     </div>
                                 </div>
-
                                 <div class="row mt-3">
                                     <div class="col mb-0">
                                         <label class="form-label" for="Status">Status</label>
@@ -381,7 +362,6 @@ $students = $studentModel->getAll();
                             if (response.success) {
                                 var student_id = response.data.id;
                                 var StudentId = response.data.StudentId;
-                                var Photo = response.data.Photo;
                                 var FullName = response.data.FullName;
                                 var EmailId = response.data.EmailId;
                                 var MobileNumber = response.data.MobileNumber;
@@ -389,7 +369,6 @@ $students = $studentModel->getAll();
 
                                 $('#editStudentModal #student_id').val(student_id);
                                 $('#editStudentModal #StudentId').val(StudentId);
-                                $('#editStudentModal #Photo').val(Photo);
                                 $('#editStudentModal #FullName').val(FullName);
                                 $('#editStudentModal #EmailId').val(EmailId);
                                 $('#editStudentModal #MobileNumber').val(MobileNumber);
@@ -442,7 +421,7 @@ $students = $studentModel->getAll();
             // To create search bar
 
 
-            $("#searchInput").on("input", function() {
+            $("#searchInput1").on("input", function() {
                 var searchTerm = $(this).val().toLowerCase();
 
                 // Loop through each row in the table body

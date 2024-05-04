@@ -12,10 +12,10 @@ $issuebooks = $issuebookModel->getAll();
     <div class="main-header d-flex align-items-center justify-content-between position-relative">
         <div class="d-flex align-items-center justify-content-center">
             <div class="page-icon">
-                <i class="bi bi-file-person-fill"></i>
+                <i class="bi bi-box-arrow-down-right"></i>
             </div>
             <div class="page-title d-none d-md-block">
-                <h5>Issue Books</h5>
+                <h5>Issued Books Details</h5>
             </div>
         </div>
 
@@ -46,8 +46,8 @@ $issuebooks = $issuebookModel->getAll();
                                     <th class="">Issue Date</th>
                                     <th class="">Return Date</th>
                                     <th class="">Return Status</th>
-                                    <th class=""></th>
-                                    <th class="">BookImage</th>
+                                    <th class="">Fine($)</th>
+                                    <th class="">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,15 +57,20 @@ $issuebooks = $issuebookModel->getAll();
                                     <tr>
                                         <td><?= ++$key ?></td>
                                         <td><?= $c['BookId'] ?? ""; ?></td>
-                                        <td>
-                                            <h6> <?= $c['StudentID'] ?? ""; ?> </h6>
-                                        </td>
-                                        <td>
-                                            <h6> <?= $c['IssuesDate'] ?? ""; ?> </h6>
-                                        </td>
+                                        <td> <?= $c['StudentID'] ?? ""; ?></td>
+                                        <td><?= $c['IssuesDate'] ?? ""; ?></td>
                                         <td> <?= $c['ReturnDate'] ?? ""; ?> </td>
-                                        <td> <?= $c['ReturnStatus'] ?? ""; ?> </td>
+                                        <td>
+                                                <div class="">
+                                                    <?php if ($c['ReturnStatus'] == 1) { ?>
+                                                        <span class="badge shade-green">Returned</span>
+                                                    <?php } else { ?>
+                                                        <span class="badge shade-red">Not returned</span>
+                                                    <?php } ?>
+                                                </div>
+                                            </td>
                                         <td> <?= $c['fine'] ?? ""; ?></td>
+                                        
 
                                         <td>
                                             <div>
@@ -116,7 +121,7 @@ $issuebooks = $issuebookModel->getAll();
                         <div class="row g-1">
                             <div class="col mb-0">
                                 <label for="Returndate" class="form-label">Return Date</label>
-                                <input type="text" id="ReturnDate" name="ReturnDate" class="form-control" placeholder="Enter Book Name" required />
+                                <input type="date" id="ReturnDate" name="ReturnDate" class="form-control" placeholder="Enter Book Name" required />
                             </div>
                         </div>
                             <div class="row mt-3">

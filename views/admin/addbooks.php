@@ -17,7 +17,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
     <div class="main-header d-flex align-items-center justify-content-between position-relative">
         <div class="d-flex align-items-center justify-content-center">
             <div class="page-icon">
-                <i class="bi bi-file-person-fill"></i>
+                <i class="bi bi-journals"></i>
             </div>
             <div class="page-title d-none d-md-block">
                 <h5>Add Books</h5>
@@ -51,8 +51,8 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col mb-3">
-                                                    <label for="StudentId" class="form-label">Student ID</label>
-                                                    <input type="text" id="StudentId" name="StudentId" class="form-control" placeholder="Student ID" required />
+                                                    <label for="Publisher" class="form-label">Publisher</label>
+                                                    <input type="text" id="Publisher" name="Publisher" class="form-control" placeholder="Publisher" required />
                                                 </div>
                                             </div>
                                             <div class="row">

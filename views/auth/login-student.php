@@ -53,15 +53,21 @@ $student_id = $sm->getAttribute("studentId");
 
 
 <body class="login-container">
+
 	<!-- Login box start -->
 	<div class="container">
+
 		<div class="login-box rounded-2 p-5">
+
 			<div class="login-form">
-				<a href="index.html" class="login-logo mb-3">
+
+				<a href="#" class="login-logo mb-3">
 					<img src="<?= asset("assets/images/openbook3.PNG") ?>" alt="Crowdnub Admin" />
 					<div class="page-title d-none d-md-block">
-						<h4 class="m-0">TurnPage<br>Library<br> System</h4>
-					</div>
+					<h4 class="m-0">
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Library
+                            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Management
+                            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System</h4>					</div>
 				</a>
 				<h5 class="fw-light mb-3">Sign in to access dashboard.</h5>
 				<form id="formAuthentication" 0 class="mb-3" action="../../services/auth-student.php" method="post">
@@ -89,6 +95,7 @@ $student_id = $sm->getAttribute("studentId");
 							Login
 						</button>
 					</div>
+					</form>
 
 					<!-- <div class="d-flex gap-2 justify-content-center">
 							<button type="submit" class="btn btn-outline-light">
@@ -98,21 +105,38 @@ $student_id = $sm->getAttribute("studentId");
 								<img src="assets/images/facebook.svg" class="login-icon" alt="Login with Facebook" />
 							</button>
 						</div> -->
-					<div class="text-center pt-3">
+					<div class="text-center pt-">
 						<span>Not registered?</span>
 						<a href="<?= asset("views/admin/createacc.php") ?>" class="text-blue text-decoration-underline ms-2">
-							Create an account</a>
-
-
+							Create an account
+						</a>
 					</div>
+					<div class="text-center py-3">Enter TurnPage Library System as a guest!</div>
+						<div class="d-flex gap-2 justify-content-center">
+						<a href="../../guest/views/admin/aboutus.php">
+							<button type="submit" class="btn btn-outline-light">
+								<img src="<?=asset("assets/images/guestpic.PNG")?>" class="login-icon" alt="Login with Google" />
+							</button>
+						</a>
+						</div>
+						
 			</div>
+			
+			<!-- <div class="header-actions d-xl-flex d-lg-none gap-4">
+				
+				<a href="../../guest/views/admin/aboutus.php" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip-blue" title="guest">
+					<i class="bi bi-person fs-3 lh-1 text-primary"></i>
+				</a>
+			</div> -->
 
-			</form>
+			
 		</div>
 		<div class="app-footer">
 			<span>© Library Management System</span>
 		</div>
 		<!-- Login box end -->
+
+
 </body>
 
 </html>

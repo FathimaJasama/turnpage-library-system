@@ -34,7 +34,7 @@ $categories = $categoryModel->getAll();
                 <div class="card-body p-0">
                     <div class="d-flex align-items-center m-3">
                     <i class="bi bi-search"></i>
-                        <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Search" aria-label="Search..." />
+                        <input type="text" id="searchInput1" class="form-control border-0 shadow-none" placeholder="Search" aria-label="Search..." />
                     </div>
                 </div>
                  <table class="table table-striped">
@@ -43,8 +43,11 @@ $categories = $categoryModel->getAll();
                                 <th style="width: 10px">#</th>
                                 <th class="">Category</th>
                                 <th class="">Status</th>
+                                <?php if ($StudentId == '946172073v') : ?>
                                 <th class="">Created_at</th>
                                 <th class="">Updated_at</th>
+                                <?php endif; ?>
+
 
                          
                                 <!-- <th style="width: 200px">Options</th> -->
@@ -62,21 +65,23 @@ $categories = $categoryModel->getAll();
                                             <?php if ($c['Status'] == 1) { ?>
                                                 <span class="badge shade-green">Enable</span>
                                             <?php } else { ?>
-                                                <span class="badge bg-danger">Disable</span>
+                                                <span class="badge shade-danger">Disable</span>
                                             <?php } ?>
                                         </div>
-                                    </td>                                    <td> <?= $c['CreationDate'] ?? ""; ?> </td>
-                                    <td> <?= $c['UpdationDate'] ?? ""; ?></td>
+                                    </td>   
+                                    <?php if ($StudentId == '946172073v') : ?>                               
+                                    <td> <?= $c['CreationDate'] ?? ""; ?> </td>
                                     
-                                        </div>
+                                        
                                     </td>
-                                    
                                     <td>
                                         <div>
-                                            <button class="btn btn-sm btn-info m-2 edit-category" data-id="<?= $c['id']; ?>">Edit</button>
+                                            <!-- <button class="btn btn-sm btn-info m-2 edit-category" data-id="<?= $c['id']; ?>">Edit</button> -->
                                             <button class="btn btn-sm btn-danger m-2 delete-category" data-id="<?= $c['id']; ?>">Delete</button>
 
                                         </div>
+                                        <?php endif; ?>
+
                                     </td>
                                 </tr>
                             <?php
@@ -98,8 +103,8 @@ $categories = $categoryModel->getAll();
 <div class="modal fade " id="editCategoryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="update-category-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="update_category">
+          <form id="update-category-form" action="<?= url('services/ajax_functions.php') ?>" autocomplete="off" enctype="multipart/form-data">
+              <input type="hidden" name="action" value="update_category">  
                 <input type="hidden" name="id" id="category_id">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel1">Edit Category</h5>
@@ -137,7 +142,7 @@ $categories = $categoryModel->getAll();
             </form>
         </div>
     </div>
-</div>
+</div> 
 
 
 
@@ -193,10 +198,10 @@ $('#create-now').on('click', function() {
     
 });
 
-$('.edit-category').on('click', async function() {
-    var student_id = $(this).data('id');
-    await getCategoryById(category_id);
-})
+// $('.edit-category').on('click', async function() {
+//     var student_id = $(this).data('id');
+//     await getCategoryById(category_id);
+// })
 
 $('.delete-category').on('click', async function() {
             var category_id = $(this).data('id');
@@ -208,51 +213,51 @@ $('.delete-category').on('click', async function() {
         
 // update category form
 // handle update modal button click
-$('#update-now').on('click', function() {
-    // Get the form element
-    var form = $('#update-category-form')[0];
-    $('#update-category-form')[0].reportValidity();
+// $('#update-now').on('click', function() {
+//     // Get the form element
+//     var form = $('#update-category-form')[0];
+//     $('#update-category-form')[0].reportValidity();
 
-    // Check form validity
-    if (form.checkValidity()) {
-        // Serialize the form data
-        var formAction = $('#update-category-form').attr('action');
-        var formData = new FormData($('#update-category-form')[0]);
+//     // Check form validity
+//     if (form.checkValidity()) {
+//         // Serialize the form data
+//         var formAction = $('#update-category-form').attr('action');
+//         var formData = new FormData($('#update-category-form')[0]);
 
-        // Perform AJAX request
-        $.ajax({
-            url: formAction,
-            type: 'POST',
-            data: formData, // Form data
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                showAlert(response.message, response.success ? 'success' : 'red', 'alert-container-update-form');
-                if (response.success) {
-                    $('#editCategoryModal').modal('hide');
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
-                }
-            },
-            error: function(error) {
-                // Handle the error
-                console.error('Error submitting the form:', error);
-            },
-            complete: function(response) {
-                // This will be executed regardless of success or error
-                console.log('Request complete:', response);
-            }
-        });
-    } else {
-        var message = ('Form is not valid. Please check your inputs.');
-        showAlert(message, 'red');
-    }
-});
+//         // Perform AJAX request
+//         $.ajax({
+//             url: formAction,
+//             type: 'POST',
+//             data: formData, // Form data
+//             dataType: 'json',
+//             contentType: false,
+//             processData: false,
+//             success: function(response) {
+//                 showAlert(response.message, response.success ? 'success' : 'red', 'alert-container-update-form');
+//                 if (response.success) {
+//                     $('#editCategoryModal').modal('hide');
+//                     setTimeout(function() {
+//                         location.reload();
+//                     }, 1000);
+//                 }
+//             },
+//             error: function(error) {
+//                 // Handle the error
+//                 console.error('Error submitting the form:', error);
+//             },
+//             complete: function(response) {
+//                 // This will be executed regardless of success or error
+//                 console.log('Request complete:', response);
+//             }
+//         });
+//     } else {
+//         var message = ('Form is not valid. Please check your inputs.');
+//         showAlert(message, 'red');
+//     }
+// });
 
 // To create search bar
-$("#searchInput").on("input", function() {
+$("#searchInput1").on("input", function() {
             var searchTerm = $(this).val().toLowerCase();
 
             // Loop through each row in the table body
@@ -262,49 +267,49 @@ $("#searchInput").on("input", function() {
             });
         });     
 
-async function getStudentById(id) {
-    var formAction = $('#update-student-form').attr('action');
+// async function getStudentById(id) {
+//     var formAction = $('#update-student-form').attr('action');
 
-    // Perform AJAX request
-    $.ajax({
-        url: formAction,
-        type: 'GET',
-        data: {
-            student_id: id,
-            action: 'get_student'
-        }, // Form data
-        dataType: 'json',
-        success: function(response) {
-            showAlert(response.message, response.success ? 'primary' : 'danger');
-            if (response.success) {
-                var student_id = response.data.id;
-                var StudentId = response.data.StudentId;
-                var Photo = response.data.Photo;
-                var FullName = response.data.FullName;
-                var EmailId = response.data.EmailId;
-                var MobileNumber = response.data.MobileNumber;
-                var Status = response.data.Status;
+//     // Perform AJAX request
+//     $.ajax({
+//         url: formAction,
+//         type: 'GET',
+//         data: {
+//             student_id: id,
+//             action: 'get_student'
+//         }, // Form data
+//         dataType: 'json',
+//         success: function(response) {
+//             showAlert(response.message, response.success ? 'primary' : 'danger');
+//             if (response.success) {
+//                 var student_id = response.data.id;
+//                 var StudentId = response.data.StudentId;
+//                 var Photo = response.data.Photo;
+//                 var FullName = response.data.FullName;
+//                 var EmailId = response.data.EmailId;
+//                 var MobileNumber = response.data.MobileNumber;
+//                 var Status = response.data.Status;
 
-                $('#editStudentModal #student_id').val(student_id);
-                $('#editStudentModal #StudentId').val(StudentId);
-                $('#editStudentModal #Photo').val(Photo);
-                $('#editStudentModal #FullName').val(FullName);
-                $('#editStudentModal #EmailId').val(EmailId);
-                $('#editStudentModal #MobileNumber').val(MobileNumber);
-                $('#editStudentModal #Status option[value="' + Status + '"]').prop('selected', true);
-                $('#editStudentModal').modal('show');
-            }
-        },
-        error: function(error) {
-            // Handle the error
-            console.error('Error submitting the form:', error);
-        },
-        complete: function(response) {
-            // This will be executed regardless of success or error
-            console.log('Request complete:', response);
-        }
-    });
-}
+//                 $('#editStudentModal #student_id').val(student_id);
+//                 $('#editStudentModal #StudentId').val(StudentId);
+//                 $('#editStudentModal #Photo').val(Photo);
+//                 $('#editStudentModal #FullName').val(FullName);
+//                 $('#editStudentModal #EmailId').val(EmailId);
+//                 $('#editStudentModal #MobileNumber').val(MobileNumber);
+//                 $('#editStudentModal #Status option[value="' + Status + '"]').prop('selected', true);
+//                 $('#editStudentModal').modal('show');
+//             }
+//         },
+//         error: function(error) {
+//             // Handle the error
+//             console.error('Error submitting the form:', error);
+//         },
+//         complete: function(response) {
+//             // This will be executed regardless of success or error
+//             console.log('Request complete:', response);
+//         }
+//     });
+// }
 
 });
 async function deleteById(id) {

@@ -21,10 +21,10 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
     <div class="main-header d-flex align-items-center justify-content-between position-relative">
         <div class="d-flex align-items-center justify-content-center">
             <div class="page-icon">
-                <i class="bi bi-file-person-fill"></i>
+                <i class="bi bi-box-arrow-down-right"></i>
             </div>
             <div class="page-title d-none d-md-block">
-                <h5>Add Author</h5>
+                <h5>Issue Book</h5>
             </div>
         </div>
 
@@ -122,7 +122,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                         processData: false, // Don't process the data
                         dataType: 'json',
                         success: function(response) {
-                            showAlert(response.message, response.success ? 'primary' : 'red');
+                            showAlert(response.message, response.success ? 'light' : 'red');
                             if (response.success) {
                                 setTimeout(function() {
                                     location.reload();

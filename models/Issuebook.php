@@ -5,8 +5,8 @@ require_once 'BaseModel.php';
 class Issuebook extends BaseModel
 {
     public $BookId;
-    public $StudentId;
-    public $IssueDate;
+    public $StudentID;
+    // public $IssueDate;
     public $ReturnDate;
     public $ReturnStatus;
     public $fine;
@@ -15,171 +15,100 @@ class Issuebook extends BaseModel
 
     protected function getTableName()
     {
-        return "tblissuedbookdetails";
+        return "tblissuedbookdetail";
     }
 
     protected function addNewRec()
     {
-        // Hash the password before storing it
 
         $param = array(
             ':BookId' => $this->BookId,
-            ':StudentId' => $this->StudentId,
-            ':IssueDate' => $this->IssueDate,
+            ':StudentId' => $this->StudentID,
+            // ':IssueDate' => $this->IssueDate,
             ':ReturnDate' => $this->ReturnDate,
             ':ReturnStatus' => $this->ReturnStatus,
             ':fine' => $this->fine
         );
 
-        return $this->pm->run("INSERT INTO " . $this->getTableName() . "(BookId,StudentId,IssueDate,ReturnDate,ReturnStatus,fine) values(:BookId, :StudentId, :IssueDate, :ReturnDate, :ReturnStatus, :fine)", $param);
+        return $this->pm->run("INSERT INTO " . $this->getTableName() . "(BookId,StudentID,ReturnDate,ReturnStatus,fine) values(:BookId, :StudentId, :ReturnDate, :ReturnStatus, :fine)", $param);
     }
 
     protected function updateRec()
     {
-        // Check if the new StudentId or EmailId already exists (excluding the current user's record)
-        $existingStudent = $this->getStudentByStudentIdOrEmailIdWithId($this->StudentId, $this->EmailId, $this->id);
-        if ($existingStudent) {
-            // Handle the error (return an appropriate message or throw an exception)
-            return false; // Or throw an exception with a specific error message
-        }
 
-        // Hash the password if it is being updated
-        if (!empty($this->Password)) {
-            $this->Password = password_hash($this->Password, PASSWORD_DEFAULT);
-        }
 
         $param = array(
-            ':StudentId' => $this->StudentId,
-            ':Photo' => $this->Photo,
-            ':FullName' => $this->FullName,
-            ':Password' => $this->Password,
-            ':MobileNumber' => $this->MobileNumber,
-            ':EmailId' => $this->EmailId,
-            ':Status' => $this->Status,
+            ':BookId' => $this->BookId,
+            ':StudentID' => $this->StudentID,
+            ':ReturnDate' => $this->ReturnDate,
+            ':ReturnStatus' => $this->ReturnStatus,
+            ':fine' => $this->fine,
             ':id' => $this->id
         );
         return $this->pm->run(
             "UPDATE " . $this->getTableName() . " 
             SET 
-                StudentId = :StudentId, 
-                Photo = :Photo, 
-                FullName = :FullName, 
-                Password = :Password,
-                EmailId = :EmailId,
-                MobileNumber = :MobileNumber,
-                Status = :Status
+                BookId = :BookId, 
+                StudentID = :StudentID, 
+                ReturnDate = :ReturnDate,
+                ReturnStatus = :ReturnStatus,
+                fine = :fine
             WHERE id = :id",
             $param
         );
     }
 
-    public function getStudentByStudentIdOrEmailIdWithId($StudentId, $EmailId, $excludeStudentId = null)
+    function createIssuebook($BookId, $StudentID, $ReturnStatus = 0)
     {
-        $param = array(':StudentId' => $StudentId, ':EmailId' => $EmailId);
 
-        $query = "SELECT * FROM " . $this->getTableName() . " 
-                  WHERE (StudentId = :StudentId OR EmailId = :EmailId)";
+        $issuebook = new Issuebook();
+        $issuebook->BookId = $BookId;
+        $issuebook->StudentID = $StudentID;
+        $issuebook->ReturnStatus = $ReturnStatus;
+        $issuebook->addNewRec();
 
-        if ($excludeStudentId !== null) {
-            $query .= " AND id != :excludeStudentId";
-            $param[':excludeStudentId'] = $excludeStudentId;
-        }
-
-        $result = $this->pm->run($query, $param);
-
-        return $result; // Return the user if found, or false if not found
-    }
-
-    function createStudent($StudentId, $Photo, $FullName, $Password, $MobileNumber, $EmailId, $Status = 1)
-    {
-        $studentModel = new Student();
-
-        // Check if StudentId or EmailId already exists
-        $existingStudent = $studentModel->getStudentByStudentIdOrEmailId($StudentId, $EmailId);
-        if ($existingStudent) {
-            // Handle the error (return an appropriate message or throw an exception)
-            return false; // Or throw an exception with a specific error message
-        }
-
-        $student = new Student();
-        $student->StudentId = $StudentId;
-        $student->Photo = $Photo;
-        $student->FullName = $FullName;
-        $student->Password = $Password;
-        $student->MobileNumber = $MobileNumber;
-        $student->EmailId = $EmailId;
-        $student->Status = $Status;
-        $student->addNewRec();
-
-        if ($student) {
-            return $student; // Student created successfully
+        if ($issuebook) {
+            return $issuebook; // Issue book created successfully
         } else {
-            return false; // Student creation failed (likely due to database error)
+            return false; // issue book creation failed (likely due to database error)
         }
     }
 
-    function updateStudent($id, $StudentId, $Photo, $FullName, $Password, $MobileNumber, $EmailId, $Status = 1)
+    function updateIssuebook($id, $BookId, $StudentID, $ReturnDate, $ReturnStatus=0, $fine)
     {
-        $studentModel = new Student();
 
-        // Check if StudentId or EmailId already exists
-        $existingStudent = $studentModel->getStudentByStudentIdOrEmailIdWithId($StudentId, $EmailId, $id);
-        if ($existingStudent) {
-            // Handle the error (return an appropriate message or throw an exception)
-            return false; // Or throw an exception with a specific error message
-        }
+        $issuebook = new Issuebook();
+        $issuebook->id = $id;
+        $issuebook->BookId = $BookId;
+        $issuebook->StudentID = $StudentID;
+        $issuebook->ReturnDate = $ReturnDate;
+        $issuebook->ReturnStatus = $ReturnStatus;
+        $issuebook->fine = $fine;
+        $issuebook->updateRec();
 
-        $student = new Student();
-        $student->id = $id;
-        $student->StudentId = $StudentId;
-        $student->Photo = $Photo;
-        $student->FullName = $FullName;
-        $student->Password = $Password;
-        $student->MobileNumber = $MobileNumber;
-        $student->EmailId = $EmailId;
-        $student->Status = $Status;
-        $student->updateRec();
-
-        if ($student) {
-            return true; // User udapted successfully
+        if ($issuebook) {
+            return true; // Issued Book udapted successfully
         } else {
-            return false; // User update failed (likely due to database error)
+            return false; // Issued Book update failed (likely due to database error)
         }
     }
 
-    public function getStudentByStudentIdOrEmailId($StudentId, $EmailId)
+
+    function deleteIssuebook($id)
     {
-        $param = array(
-            ':StudentId' => $StudentId,
-            ':EmailId' => $EmailId
-        );
+        $issuebook = new Issuebook();
+        $issuebook->deleteRec($id);
 
-        $sql = "SELECT * FROM " . $this->getTableName() . " WHERE StudentId = :StudentId OR EmailId = :EmailId";
-        $result = $this->pm->run($sql, $param);
-
-        if (!empty($result)) {  // Check if the array is not empty
-            $student = $result[0]; // Assuming the first row contains the student data
-            return $student;
+        if ($issuebook) {
+            return true; // Issued book udapted successfully
         } else {
-            return null;
+            return false; // Issued book update failed (likely due to database error)
         }
     }
 
-    function deleteStudent($id)
+    public function getLastInsertedIssuedbookId()
     {
-        $student = new Student();
-        $student->deleteRec($id);
-
-        if ($student) {
-            return true; // User udapted successfully
-        } else {
-            return false; // User update failed (likely due to database error)
-        }
-    }
-
-    public function getLastInsertedStudentId()
-    {
-        $result = $this->pm->run('SELECT MAX(id) as lastInsertedId FROM stdents', null, true);
+        $result = $this->pm->run('SELECT MAX(id) as lastInsertedId FROM tblissuedbookdetails', null, true);
         return $result['lastInsertedId'] ?? 100;
     }
 }
