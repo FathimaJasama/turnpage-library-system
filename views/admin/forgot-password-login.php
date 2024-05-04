@@ -55,10 +55,10 @@ if(isset($_POST['submit'])) {
 		<meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
 		<meta property="og:type" content="Website">
 		<meta property="og:site_name" content="Bootstrap Gallery">
-		<link rel="shortcut icon" href="<?=asset("assets/images/favicon.svg")?>" />
+		<link rel="shortcut icon" href="<?=asset("assets/images/openbook4.png")?>" />
 
 		<!-- Title -->
-		<title>Bootstrap Gallery - Admin Dashboards</title>
+		<title>TurnPage Library System</title>
 
 		<!-- *************
 			************ Common Css Files *************

@@ -39,7 +39,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                             <div class="col-xxl-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="card-title">Form Layout</div>
+                                        <div class="card-title">Issue Book Details</div>
                                     </div>
                                     <div class="card-body">
                                         <!-- Row start -->

@@ -65,8 +65,8 @@ $student_id = $sm->getAttribute("studentId");
 					<img src="<?= asset("assets/images/openbook3.PNG") ?>" alt="Crowdnub Admin" />
 					<div class="page-title d-none d-md-block">
 					<h4 class="m-0">
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Library
-                            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Management
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TurnPage
+                            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Library
                             <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System</h4>					</div>
 				</a>
 				<h5 class="fw-light mb-3">Sign in to access dashboard.</h5>
@@ -88,7 +88,7 @@ $student_id = $sm->getAttribute("studentId");
 							<input class="form-check-input" type="checkbox" value="" id="rememberPassword" />
 							<label class="form-check-label" for="rememberPassword">Remember</label>
 						</div>
-						<a href="<?= asset("views/admin/forgot-password-login.php") ?>" class="text-blue text-decoration-underline">Lost password?</a>
+						<a href="<?= asset("views/admin/forgot-password-login.php") ?>" target="_blank" class="text-blue text-decoration-underline">Lost password?</a>
 					</div>
 					<div class="d-grid py-3">
 						<button type="submit" class="btn btn-lg btn-primary edit-student" data-id="<?= $student_id ?>">

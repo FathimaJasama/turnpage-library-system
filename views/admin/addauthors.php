@@ -130,7 +130,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
                             processData: false, // Don't process the data
                             dataType: 'json',
                             success: function(response) {
-                                showAlert(response.message, response.success ? 'success' : 'red');
+                                showAlert(response.message, response.success ? 'light' : 'red');
                                 if (response.success) {
                                     setTimeout(function() {
                                         location.reload();

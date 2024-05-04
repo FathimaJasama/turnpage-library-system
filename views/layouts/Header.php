@@ -120,7 +120,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 								</a>
 							</div>
 						<?php else : ?>
-							<a href="booktables-oop.php" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip-blue" data-bs-title="Messages">
+							<a href="booktables-oop.php" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip-blue" data-bs-title="Books">
 								<i class="bi bi-journals fs-5 lh-1"></i>
 								<span class="count-label"></span>
 							</a>
@@ -314,7 +314,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</li>
 								<?php endif; ?>
 								<li>
-									<a href="<?= 'forgot-password-login.php' ?>">
+									<a href="<?= 'forgot-password-login.php' ?>" target="_blank">
 										<i class="bi bi-emoji-expressionless"></i>
 										<span class="menu-text">Change Password</span>
 									</a>

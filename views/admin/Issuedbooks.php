@@ -130,8 +130,8 @@ $issuebooks = $issuebookModel->getAll();
                                     <div class="input-group">
                                         <select class="form-select" id="ReturnStatus" name="ReturnStatus" required>
                                             <option selected="" value="">Choose...</option>
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
+                                            <option value="1">Returned</option>
+                                            <option value="0">Not returned</option>
                                         </select>
                                     </div>
                                 </div>

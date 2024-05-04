@@ -82,28 +82,7 @@ $StudentId = $sm->getAttribute("StudentId");
 											<h6 class="d-flex align-items-center mb-3">
 												<span class="text"><?= $student['MobileNumber'] ?? ""; ?></span>
 											</h6>
-											<?php
-											// Find the user's data in the $students array
-											$currentUser = null;
-											foreach ($issuebooks as $key => $issuebook) {
-												if ($issuebook['StudentID'] == $StudentId) {
-													$currentUser = $issuebook;
-													break;
-												}
-											}
 
-											// Display the user's photo if found
-											if ($currentUser && isset($currentUser['fine']) && !empty($currentUser['fine'])) {
-											?>
-											<h5>&#128226;&nbsp;Your Fine Ammount is&nbsp;:&nbsp;<span class="text-danger"><?= $issuebook['fine'] ?? ""; ?>$</span></h5>
-											<?php
-											} else {
-												// Default avatar if photo not found
-											?>
-											<h5><span class="text-primary"> fine is not applicable</span></h5>
-											<?php
-											}
-											?>
 										</div>
 									</div>
 									<!-- <div class="col-sm-6 col-12">
@@ -146,6 +125,30 @@ $StudentId = $sm->getAttribute("StudentId");
 										</div>
 									</div>
 								</div>
+								<br>
+								<?php
+								// Find the user's data in the $students array
+								$currentUser = null;
+								foreach ($issuebooks as $key => $issuebook) {
+									if ($issuebook['StudentID'] == $StudentId) {
+										$currentUser = $issuebook;
+										break;
+									}
+								}
+
+								// Display the user's photo if found
+								if ($currentUser && isset($currentUser['fine']) && !empty($currentUser['fine'])) {
+								?>
+									<h5><span style="font-size:25px;"> &#128226; </span>&nbsp;The fine amount per overdue book stands at &nbsp;&nbsp;<span class="text-danger"><?= $issuebook['fine'] ?? ""; ?>$</span>
+										<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please ensure timely returns to avoid accumulating fines.
+									</h5>
+								<?php
+								} else {
+									// Default avatar if photo not found
+								?>
+								<?php
+								}
+								?>
 							</div>
 						</div>
 					</div>

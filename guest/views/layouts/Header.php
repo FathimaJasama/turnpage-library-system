@@ -4,12 +4,8 @@ include __DIR__ . '/../../config.php';
 include __DIR__ . '/../../helpers/AppManager.php';
 // require_once __DIR__ . '/../../models/Student.php';
 
-// $studentModel = new Student();
-// $students = $studentModel->getAll();
 $sm = AppManager::getSM();
-// $Photo = $sm->getAttribute("Photo");
-// $FullName = $sm->getAttribute("FullName");
-// $student_id = $sm->getAttribute("studentId");
+
 
 
 
@@ -147,33 +143,33 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</a>
 								</li>
 								<li class="sidebar-dropdown">
-										<a href="#">
-											<i class="bi bi-grid"></i>
-											<span class="menu-text">Books</span>
-										</a>
-										<div class="sidebar-submenu">
-											<ul>
-												<li>
-													<a href=<?= url("guest/views/admin/categories/technology.php") ?>>Technology</a>
-												</li>
-												<li>
-													<a href=<?= url("guest/views/admin/categories/science.php") ?>>Science</a>
-												</li>
-												<li>
-													<a href=<?= url("guest/views/admin/categories/management.php") ?>>Management</a>
-												</li>
-												<li>
-													<a href=<?= url("guest/views/admin/categories/general.php") ?> > General</a>
-												</li>
-												<li>
-													<a href=<?= url("guest/views/admin/categories/romantic.php") ?>>Romantic</a>
-												</li>
-												<li>
-													<a href=<?= url("guest/views/admin/categories/programming.php") ?>>Programming</a>
-												</li>
-											</ul>
-										</div>
-									</li>
+									<a href="#">
+										<i class="bi bi-grid"></i>
+										<span class="menu-text">Books</span>
+									</a>
+									<div class="sidebar-submenu">
+										<ul>
+											<li>
+												<a href=<?= url("guest/views/admin/categories/technology.php") ?>>Technology</a>
+											</li>
+											<li>
+												<a href=<?= url("guest/views/admin/categories/science.php") ?>>Science</a>
+											</li>
+											<li>
+												<a href=<?= url("guest/views/admin/categories/management.php") ?>>Management</a>
+											</li>
+											<li>
+												<a href=<?= url("guest/views/admin/categories/general.php") ?>> General</a>
+											</li>
+											<li>
+												<a href=<?= url("guest/views/admin/categories/romantic.php") ?>>Romantic</a>
+											</li>
+											<li>
+												<a href=<?= url("guest/views/admin/categories/programming.php") ?>>Programming</a>
+											</li>
+										</ul>
+									</div>
+								</li>
 								<li>
 									<a href="<?= url('views/admin/createacc.php') ?>">
 										<i class="bi bi-file-person-fill"></i>
@@ -181,7 +177,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 									</a>
 								</li>
 								<li>
-									<a href="<?= 'support.php'?>">
+									<a href="<?= url('guest/views/admin/support.php') ?>">
 										<i class="bi bi-code-square"></i>
 										<span class="menu-text">Support</span>
 									</a>
