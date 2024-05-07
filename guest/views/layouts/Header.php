@@ -137,7 +137,7 @@ $currentFilename = basename($currentUrl);  // e.g., "dashboard.php"
 						<div class="sidebarMenuScroll">
 							<ul id="dashboard">
 								<li>
-									<a href="<?= "aboutus.php" ?>">
+									<a href="<?= "../admin/aboutus.php" ?>">
 										<i class="bi bi-info-circle"></i>
 										<span class="menu-text">About Us</span>
 									</a>

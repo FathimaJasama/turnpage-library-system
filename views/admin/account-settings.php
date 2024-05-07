@@ -93,26 +93,26 @@ $StudentId = $sm->getAttribute("StudentId");
 									</div> -->
 									<div class="col-sm-6 col-12">
 										<div class="form-group">
+											<label for="Photo">Profile Photo</label>
+											<input type="text" class="form-control" id="Photo" placeholder="Photo" value=<?=$student['Photo']?>>
+										</div>
+									</div>
+									<div class="col-sm-6 col-12">
+										<div class="form-group">
 											<label for="fullName">Full Name</label>
-											<input type="text" class="form-control" id="fullName" placeholder="Full Name">
+											<input type="text" class="form-control" id="fullName" placeholder="Full Name" value=<?=$student['FullName']?>>
 										</div>
 									</div>
 									<div class="col-sm-6 col-12">
 										<div class="form-group">
 											<label for="eMail">Email</label>
-											<input type="email" class="form-control" id="eMail" placeholder="Enter email ID">
+											<input type="email" class="form-control" id="eMail" placeholder="Enter email ID" value=<?=$student['EmailId']?>>
 										</div>
 									</div>
 									<div class="col-sm-6 col-12">
 										<div class="form-group">
-											<label for="phone">Phone</label>
-											<input type="text" class="form-control" id="phone" placeholder="Enter phone number">
-										</div>
-									</div>
-									<div class="col-sm-6 col-12">
-										<div class="form-group">
-											<label for="mobile">Mobile</label>
-											<input type="tel" class="form-control" id="mobile" placeholder="1234567890">
+											<label for="phone">Mobile</label>
+											<input type="text" class="form-control" id="phone" placeholder="Enter phone number" value=<?=$student['MobileNumber']?>>
 										</div>
 									</div>
 								</div>

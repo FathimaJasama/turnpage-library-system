@@ -244,6 +244,7 @@ $students = $studentModel->getAll();
 
         <script>
             $(document).ready(function() {
+                alert('welcome to student page')
 
                 // Handle modal button click
                 $('#create-now').on('click', function() {
